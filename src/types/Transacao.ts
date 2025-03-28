@@ -1,42 +1,29 @@
-export enum TipoTransacao {
-    COMPRA = "Compra",
-    VENDA = "Venda"
-}
-
 export class Transacao {
+    public id: string;
+
     constructor(
-        public id: number,
-        public tipoTransacao: TipoTransacao,
+        public tipo: 'COMPRA' | 'VENDA',
         public mercadoria: string,
-        public produto: string,
         public quantidade: number,
         public valor: number,
-        public data: Date
-    ) {}
+        public data: Date = new Date()
+    ) {
+        this.id = Math.random().toString(36).substring(2, 9);
+    }
 
-    // Método para serialização
+    get total(): number {
+        return this.quantidade * this.valor;
+    }
+
     toJSON() {
         return {
             id: this.id,
-            tipoTransacao: this.tipoTransacao,
+            tipo: this.tipo,
             mercadoria: this.mercadoria,
-            produto: this.produto,
             quantidade: this.quantidade,
             valor: this.valor,
-            data: this.data.toISOString()
+            data: this.data.toISOString(),
+            total: this.total
         };
-    }
-
-    //Método estático para desserialização
-    static fromJSON(json: any): Transacao {
-        return new Transacao(
-            json.id,
-            json.tipoTransacao,
-            json.mercadoria,
-            json.produto,
-            json.quantidade,
-            json.valor,
-            new Date(json.data)
-        );
     }
 }

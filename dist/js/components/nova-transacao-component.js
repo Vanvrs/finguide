@@ -1,35 +1,58 @@
-import { Transacao } from "../types/Transacao.js";
+/* import { Conta } from "../types/Conta.js";
+
 export class NovaTransacaoComponent {
-    constructor(conta) {
+    private form: HTMLFormElement;
+    private conta: Conta;
+
+    constructor(conta: Conta) {
+        this.form = document.querySelector('#transacao-form') as HTMLFormElement;
         this.conta = conta;
-        const formElement = document.getElementById('formTransacao');
-        if (!formElement)
-            throw new Error("Formulário não encontrado!");
-        this.form = formElement;
-        this.configurarEventos();
+        this.setupEventListeners();
     }
-    configurarEventos() {
-        this.form.addEventListener('submit', (event) => {
+
+    private setupEventListeners(): void {
+        this.form?.addEventListener('submit', (event) => {
             event.preventDefault();
-            this.adicionarTransacao();
+            
+            const tipo = (this.form.querySelector('#tipo') as HTMLSelectElement).value as 'COMPRA' | 'VENDA';
+            const mercadoria = (this.form.querySelector('#mercadoria') as HTMLInputElement).value;
+            const quantidade = parseFloat((this.form.querySelector('#quantidade') as HTMLInputElement).value);
+            const valor = parseFloat((this.form.querySelector('#valor') as HTMLInputElement).value);
+
+            if (!isNaN(valor) && !isNaN(quantidade)) {  // Corrigido aqui - parêntese fechado
+                this.conta.adicionarTransacao(tipo, valor, mercadoria, quantidade);
+                this.form.reset();
+            } else {
+                alert("Por favor, insira valores válidos para quantidade e valor.");
+            }
         });
     }
-    adicionarTransacao() {
-        const tipoTransacao = document.getElementById('transactionType').value;
-        const mercadoria = document.getElementById('mercadoria').value;
-        const produto = document.getElementById('produto').value;
-        const quantidadeInput = document.getElementById('quantidade');
-        const valorInput = document.getElementById('valor');
-        const quantidade = parseInt(quantidadeInput.value);
-        const valor = parseFloat(valorInput.value);
-        if (!mercadoria || !produto || isNaN(quantidade) || isNaN(valor)) {
-            alert("Preencha todos os campos corretamente!");
-            return;
-        }
-        const novaTransacao = new Transacao(Date.now(), tipoTransacao, mercadoria, produto, quantidade, valor, new Date());
-        this.conta.adicionarTransacao(novaTransacao);
-        this.form.reset();
-        window.location.href = 'extrato.html';
+}
+
+export default NovaTransacaoComponent; */
+export default class NovaTransacaoComponent {
+    constructor(conta) {
+        this.form = document.querySelector('#transacao-form');
+        this.conta = conta;
+        this.setupEventListeners();
+    }
+    setupEventListeners() {
+        this.form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const tipo = this.form.querySelector('#tipo').value;
+            const mercadoria = this.form.querySelector('#mercadoria').value;
+            const quantidade = parseFloat(this.form.querySelector('#quantidade').value);
+            const valor = parseFloat(this.form.querySelector('#valor').value);
+            if (!isNaN(valor) && !isNaN(quantidade) && mercadoria.trim() !== '') {
+                this.conta.adicionarTransacao(tipo, valor, mercadoria, quantidade);
+                this.form.reset();
+                alert('Transação adicionada com sucesso!');
+                // Dispara evento para atualizar o extrato
+                document.dispatchEvent(new CustomEvent('transacao-adicionada'));
+            }
+            else {
+                alert("Por favor, preencha todos os campos corretamente.");
+            }
+        });
     }
 }
-/* https://meet.google.com/yas-qmod-wsk */ 

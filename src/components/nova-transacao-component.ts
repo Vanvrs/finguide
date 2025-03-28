@@ -1,55 +1,51 @@
 import { Conta } from "../types/Conta.js";
-import { Transacao, TipoTransacao } from "../types/Transacao.js";
 
-
-export class NovaTransacaoComponent {
+export default class NovaTransacaoComponent {
     private form: HTMLFormElement;
     private conta: Conta;
 
     constructor(conta: Conta) {
-        this.conta = conta;
-        const formElement = document.getElementById('formTransacao');
-        if (!formElement) throw new Error("Formulário não encontrado!");
-        this.form = formElement as HTMLFormElement;
-        this.configurarEventos();
-    }
-
-    private configurarEventos(): void {
-        this.form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            this.adicionarTransacao();
-        });
-    }
-
-    private adicionarTransacao(): void {
-        const tipoTransacao = (document.getElementById('transactionType') as HTMLSelectElement).value as TipoTransacao;
-        const mercadoria = (document.getElementById('mercadoria') as HTMLInputElement).value;
-        const produto = (document.getElementById('produto') as HTMLInputElement).value;
-        const quantidadeInput = document.getElementById('quantidade') as HTMLInputElement;
-        const valorInput = document.getElementById('valor') as HTMLInputElement;
-
-        const quantidade = parseInt(quantidadeInput.value);
-        const valor = parseFloat(valorInput.value);
-
-        if (!mercadoria || !produto || isNaN(quantidade) || isNaN(valor)) {
-            alert("Preencha todos os campos corretamente!");
-            return;
+        const formElement = document.querySelector('#formTransacao') as HTMLFormElement;
+        if (!formElement) {
+            throw new Error("Formulário não encontrado no DOM");
         }
 
-        const novaTransacao = new Transacao(
-            Date.now(),
-            tipoTransacao,
-            mercadoria,
-            produto,
-            quantidade,
-            valor,
-            new Date()
-        );
+        this.form = formElement;
+        this.conta = conta;
+        this.setupEventListeners();
+    }
 
-        this.conta.adicionarTransacao(novaTransacao);
-        this.form.reset();
-        
-        window.location.href = 'extrato.html';
+    private setupEventListeners(): void {
+        this.form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const tipo = this.form.querySelector('#tipoTransacao') as HTMLSelectElement;
+            const mercadoria = this.form.querySelector('#mercadoria') as HTMLInputElement;
+            const quantidade = this.form.querySelector('#quantidade') as HTMLInputElement;
+            const valor = this.form.querySelector('#valor') as HTMLInputElement;
+
+            if (!tipo || !mercadoria || !quantidade || !valor) {
+                alert("Elementos do formulário não encontrados!");
+                return;
+            }
+
+            const tipoValue = tipo.value as 'COMPRA' | 'VENDA';
+            const mercadoriaValue = mercadoria.value;
+            const quantidadeValue = parseFloat(quantidade.value);
+            const valorValue = parseFloat(valor.value);
+
+            if (!isNaN(valorValue) && !isNaN(quantidadeValue) && mercadoriaValue.trim() !== '') {
+                this.conta.adicionarTransacao(tipoValue, valorValue, mercadoriaValue, quantidadeValue);
+                this.form.reset();
+
+                //Dispara evento para atualizar o extrato
+                document.dispatchEvent(new CustomEvent('transacao-adicionada'));
+
+                //Mostra mensagem de sucesso
+                alert('Transação adicionada com sucesso!');
+            } else {
+                alert("Por favor, preencha todos os campos corretamente.");
+            }
+        });
     }
 }
-/* https://meet.google.com/yas-qmod-wsk */

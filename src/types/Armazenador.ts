@@ -1,23 +1,20 @@
 export class Armazenador {
     static salvar(chave: string, valor: any): void {
-        const valorParaSalvar = JSON.stringify(valor, (key, value) => {
-            if (value instanceof Date) {
-                return value.toISOString();
-            }
-            return value;
-        });
-        localStorage.setItem(chave, valorParaSalvar);
+        try {
+            const valorJSON = JSON.stringify(valor);
+            localStorage.setItem(chave, valorJSON);
+        } catch (error) {
+            console.error('Erro ao salvar no localStorage:', error);
+        }
     }
 
     static obter<T>(chave: string): T | null {
-        const valor = localStorage.getItem(chave);
-        if (!valor) return null;
-
-        return JSON.parse(valor, (key, value) => {
-            if (key === 'data' && typeof value === 'string') {
-                return new Date(value);
-            }
-            return value;
-        }) as T;
+        try {
+            const valor = localStorage.getItem(chave);
+            return valor ? JSON.parse(valor) as T : null;
+        } catch (error) {
+            console.error('Erro ao ler do localStorage:', error);
+            return null;
+        }
     }
 }

@@ -1,195 +1,113 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Murecho:wght@100..900&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-}
 
 body {
-    background-color: #1a1a2e;
-    color: #ffffff;
-    font-family: "Murecho", sans-serif;
+    background-color: #201924;
 }
 
-.container {
-    max-width: 400px;
-    margin: 20px auto;
+main {
+    padding-bottom: 20px;
 }
 
-.header {
-    font-family: "Montserrat Alternates", sans-serif;
-    width: 100%;
+.logo-ipad {
+    display: none;
 }
 
-.dollar-icon {
-    height: 100px;
-    width: 100px;
-    z-index: 1;
-    left: 20%;
-    transform: translateX(-70%); 
-    top: -45px; 
+.pagina-extrato {
+    display: block;
 }
 
-.header h1 {
-    font-size: 57px;
-    margin: 0;
-    z-index: 2; /* Garante que o texto fique acima da imagem */
-    font-weight: 700;
-    display: inline-block;
-    position: relative;
+.titulo {
+    color: #E2E2E2;
+    font-family: 'Murecho', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
 
-.header h1 span {
-    font-size: 43px;
-    color: #47E1B6; /* Cor ciano para "Guide" */
-}
-
-form select option {
-    color: #8C8C8C;
-}
-
-h2 {
-    font-size: 18px;
-    margin-bottom: 20px;
-}
-
-.form-control,
-.form-select {
-    background-color: #2a2a3e;
-    border: none;
-    color: #ffffff;
-}
-
-.form-control::placeholder {
-    color: #888;
-}
-
-.btn-custom {
-    background-color: #AD8AFF;
-    color: #240E2E;
-    font-weight: 700;
-    border: none;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-button a {
-    text-decoration: none;
-    color: #240E2E;
-}
-
-.btn-custom:hover {
-    background-color: #5a32a3;
-}
-
-.clear-link {
-    color: #C1C0C1;
-    text-decoration: none;
-    font-size: 14px;
-    float: right;
+.input-altura {
+    height: 50px;
 }
 
 .form-label {
     color: #C1C0C1;
+    font-family: 'Murecho', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
 
-.saldo h3 {
-    color: #ffffff;
-    margin-bottom: 10px;
+.form-select,
+.form-control {
+    background-color: #322C3A;
+    color: #8C8C8C;
+    border: none;
+    font-family: 'Murecho', sans-serif;
+    font-size: 18px;
 }
 
-.saldo p {
-    font-size: 2rem;
-    color: #AD8AFF;
+.form-select:focus,
+.form-control:focus {
+    background-color: #322C3A;
+    color: #E2E2E2;
+    box-shadow: none;
 }
 
-.lista-transacoes {
-    background-color: #2a2a3e;
-    border-radius: 8px;
-    padding: 15px;
+.form-control::placeholder {
+    color: #8C8C8C;
+    opacity: 1;
 }
 
-.transacao {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #444;
+.btn-roxo {
+    background-color: #AD8AFF;
+    color: #240E2E;
+    border: none;
+    font-family: 'Murecho', sans-serif;
+    font-weight: 600;
+    font-size: 23px;
 }
 
-.transacao:last-child {
-    border-bottom: none;
+.btn-roxo:hover {
+    background-color: #8d5dfc;
 }
 
-.transacao .tipo {
-    font-weight: bold;
-    color: #ff5555;
+.modal-content{
+    background-color: #322C3A; 
+    color: #E2E2E2;
 }
 
-.transacao .tipo.plus {
-    color: #55ff55;
-}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .pagina-transacao {
+        background-color: #322C3A;
+    }
 
-.transacao .mercadoria {
-    flex: 1;
-    margin-left: 10px;
-}
+    .logo-celular {
+        display: none;
+    }
 
-.transacao .quantidade {
-    margin-right: 20px;
-}
+    .logo-ipad {
+        display: block;
+    }
 
-.transacao .valor {
-    font-weight: bold;
-}
+    .titulo {
+        font-size: 28px;
+    }
 
-.total {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 0;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #AD8AFF;
-}
+    .form-select,
+    .form-control {
+        background-color: #201924;
+    }
 
-.grupo-transacao {
-  border-bottom: 1px solid #dee2e6;
-  padding-bottom: 1rem;
-}
+    .form-select:focus,
+    .form-control:focus {
+    background-color: #201924;
+    color: #E2E2E2;
+    box-shadow: none;
+    }
 
-.grupo-label {
-  font-size: 1.2rem;
-  color: #6c757d;
-  margin-bottom: 1rem;
-}
+    .pagina-extrato {
+        display: block;
+    }
+} 
 
-.transacao {
-  background-color: #f8f9fa;
-  border-radius: 0.25rem;
-}
-
-.transacao-info {
-  flex: 1;
-}
-
-.transacao-valor {
-  text-align: right;
-}
-
-.delete-btn {
-  margin-left: 1rem;
-}
-
-.tipo {
-  font-weight: bold;
-  margin-right: 0.5rem;
-}
-
-#saldoTotal {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #28a745;
-}

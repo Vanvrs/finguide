@@ -1,32 +1,54 @@
-export var TipoTransacao;
-(function (TipoTransacao) {
-    TipoTransacao["COMPRA"] = "Compra";
-    TipoTransacao["VENDA"] = "Venda";
-})(TipoTransacao || (TipoTransacao = {}));
+/*     export class Transacao {
+        public id: string;
+        
+        constructor(
+            public tipo: 'COMPRA' | 'VENDA',
+            public mercadoria: string,
+            public quantidade: number,
+            public valor: number,
+            public data: Date = new Date()
+        ) {
+            this.id = Math.random().toString(36).substring(2, 9); // Gerando um ID simples
+        }
+    
+        get total(): number {
+            return this.quantidade * this.valor;
+        }
+    
+        // Método para serialização
+        toJSON() {
+            return {
+                id: this.id,
+                tipo: this.tipo,
+                mercadoria: this.mercadoria,
+                quantidade: this.quantidade,
+                valor: this.valor,
+                data: this.data.toISOString(),
+                total: this.total
+            };
+        }
+    } */
 export class Transacao {
-    constructor(id, tipoTransacao, mercadoria, produto, quantidade, valor, data) {
-        this.id = id;
-        this.tipoTransacao = tipoTransacao;
+    constructor(tipo, mercadoria, quantidade, valor, data = new Date()) {
+        this.tipo = tipo;
         this.mercadoria = mercadoria;
-        this.produto = produto;
         this.quantidade = quantidade;
         this.valor = valor;
         this.data = data;
+        this.id = Math.random().toString(36).substring(2, 9);
     }
-    // Método para serialização
+    get total() {
+        return this.quantidade * this.valor;
+    }
     toJSON() {
         return {
             id: this.id,
-            tipoTransacao: this.tipoTransacao,
+            tipo: this.tipo,
             mercadoria: this.mercadoria,
-            produto: this.produto,
             quantidade: this.quantidade,
             valor: this.valor,
-            data: this.data.toISOString()
+            data: this.data.toISOString(),
+            total: this.total
         };
-    }
-    //Método estático para desserialização
-    static fromJSON(json) {
-        return new Transacao(json.id, json.tipoTransacao, json.mercadoria, json.produto, json.quantidade, json.valor, new Date(json.data));
     }
 }

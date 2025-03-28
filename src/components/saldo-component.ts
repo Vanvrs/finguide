@@ -8,7 +8,7 @@ export class SaldoComponent {
     constructor(conta: Conta) {
         this.conta = conta;
         
-        const saldoElement = document.getElementById('saldoTotal');
+        const saldoElement = document.getElementById('#saldoTotal');
         if (!saldoElement) {
             throw new Error("Elemento 'saldoTotal' não encontrado no DOM!");
         }

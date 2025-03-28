@@ -1,128 +1,75 @@
-import { Conta } from "../types/Conta";
-import { GrupoTransacao } from "../types/GrupoTransacao";
-import { formatarMoeda } from "../utils/formatters";
-import { TipoTransacao } from "../types/Transacao";
+import { Transacao } from "../types/Transacao.js";
+import { Conta } from "../types/Conta.js";
+import { formatarMoeda } from "../utils/formatters.js";
 
-declare var bootstrap: any;
-
-export class ExtratoComponent {
+export default class ExtratoComponent {
+    private tabela: HTMLTableSectionElement;
+    private saldoTotal: HTMLElement;
     private conta: Conta;
-    private listaTransacoes: HTMLElement;
-    private modal: any;
-    private transacaoParaDeletar: number | null = null;
 
     constructor(conta: Conta) {
+        const tabelaElement = document.querySelector('#listaTransacoes') as HTMLTableSectionElement;
+        const saldoElement = document.querySelector('#saldoTotal') as HTMLElement;
+
+        if (!tabelaElement || !saldoElement) {
+            throw new Error("Elementos do extrato não encontrados no DOM");
+        }
+
+        this.tabela = tabelaElement;
+        this.saldoTotal = saldoElement;
         this.conta = conta;
-        this.listaTransacoes = document.getElementById('listaTransacoes') as HTMLElement;
-        
-        const modalElement = document.getElementById('confirmModal');
-        if (modalElement) {
-            this.modal = new bootstrap.Modal(modalElement);
-        }
-        
-        this.configurarEventos();
-        this.atualizar();
+        this.render();
+        this.setupEventListeners();
     }
 
-    private configurarEventos(): void {
-        const confirmDelete = document.getElementById('confirmDelete');
-        if (confirmDelete) {
-            confirmDelete.addEventListener('click', () => {
-                if (this.transacaoParaDeletar !== null) {
-                    this.conta.removerTransacao(this.transacaoParaDeletar);
-                    this.atualizar();
-                    this.modal.hide();
-                }
-            });
-        }
-    }
+    private render(): void {
+        this.tabela.innerHTML = '';
+        const transacoes = this.conta.getTransacoes();
 
-    private mostrarModalConfirmacao(transacaoId: number): void {
-        const transacao = this.conta.getTransacaoPorId(transacaoId);
-        if (!transacao) return;
-
-        this.transacaoParaDeletar = transacaoId;
-        
-        const detailsElement = document.getElementById('transactionDetails');
-        if (detailsElement) {
-            const tipo = transacao.tipoTransacao === TipoTransacao.COMPRA ? '-' : '+';
-            const valorTotal = transacao.valor * transacao.quantidade;
-            const valorFormatado = formatarMoeda(transacao.valor);
-            const totalFormatado = formatarMoeda(valorTotal);
-
-            detailsElement.innerHTML = `
-                <p><strong>Tipo:</strong> ${transacao.tipoTransacao}</p>
-                <p><strong>Mercadoria:</strong> ${transacao.mercadoria}</p>
-                <p><strong>Produto:</strong> ${transacao.produto}</p>
-                <p><strong>Quantidade:</strong> ${transacao.quantidade}</p>
-                <p><strong>Valor Unitário:</strong> ${valorFormatado}</p>
-                <p><strong>Total:</strong> ${totalFormatado}</p>
-                <p><strong>Data:</strong> ${transacao.data.toLocaleDateString('pt-BR')}</p>
-            `;
-        }
-
-        this.modal.show();
-    }
-
-    public atualizar(): void {
-        if (!this.listaTransacoes) return;
-
-        const grupos = this.conta.getGruposTransacoes();
-        this.listaTransacoes.innerHTML = '';
-
-        if (!grupos || grupos.length === 0) {
-            this.listaTransacoes.innerHTML = '<p class="text-center">Nenhuma transação encontrada.</p>';
-            return;
-        }
-
-        grupos.forEach((grupo: GrupoTransacao) => {
-            const grupoElement = document.createElement('div');
-            grupoElement.className = 'grupo-transacao mb-4';
-            
-            const labelElement = document.createElement('h3');
-            labelElement.className = 'grupo-label';
-            labelElement.textContent = grupo.label;
-            grupoElement.appendChild(labelElement);
-
-            grupo.transacoes.forEach(transacao => {
-                const tipo = transacao.tipoTransacao === TipoTransacao.COMPRA ? '-' : '+';
-                const valorTotal = transacao.valor * transacao.quantidade;
-                const valorFormatado = formatarMoeda(valorTotal);
-
-                const transacaoElement = document.createElement('div');
-                transacaoElement.className = 'transacao d-flex justify-content-between align-items-center p-3 mb-2';
-                transacaoElement.innerHTML = `
-                    <div class="transacao-info">
-                        <span class="tipo ${tipo === '+' ? 'text-success' : 'text-danger'}">${tipo}</span>
-                        <span class="mercadoria">${transacao.mercadoria}</span>
-                        <span class="quantidade">${transacao.quantidade}x</span>
-                        <span class="produto small text-muted">${transacao.produto}</span>
-                    </div>
-                    <div class="transacao-valor">
-                        <span class="valor">${valorFormatado}</span>
-                        <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${transacao.id}">
-                            Excluir
+        if (transacoes.length === 0) {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td colspan="6">Nenhuma transação cadastrada</td>`;
+            this.tabela.appendChild(row);
+        } else {
+            transacoes.forEach((transacao: Transacao) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${transacao.tipo === 'COMPRA' ? 'Compra' : 'Venda'}</td>
+                    <td>${transacao.mercadoria}</td>
+                    <td>${transacao.quantidade}</td>
+                    <td>${formatarMoeda(transacao.valor)}</td>
+                    <td>${formatarMoeda(transacao.total)}</td>
+                    <td>
+                        <button class="btn-remover" data-id="${transacao.id}">
+                            <i class="bi bi-trash"></i>
                         </button>
-                    </div>
+                    </td>
                 `;
-                
-                grupoElement.appendChild(transacaoElement);
+                this.tabela.appendChild(row);
             });
-
-            this.listaTransacoes.appendChild(grupoElement);
-        });
-
-        document.querySelectorAll('.delete-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const target = e.target as HTMLElement;
-                const id = parseInt(target.getAttribute('data-id') || '0');
-                this.mostrarModalConfirmacao(id);
-            });
-        });
-
-        const saldoTotalElement = document.getElementById('saldoTotal');
-        if (saldoTotalElement) {
-            saldoTotalElement.textContent = formatarMoeda(this.conta.getSaldo());
         }
+
+        this.saldoTotal.textContent = formatarMoeda(this.conta.getSaldo());
+    }
+
+    private setupEventListeners(): void {
+        this.tabela.addEventListener('click', (event) => {
+            const target = event.target as HTMLElement;
+            const btnRemover = target.closest('.btn-remover');
+            
+            if (btnRemover) {
+                const transacaoId = btnRemover.getAttribute('data-id');
+                if (transacaoId) {
+                    if (confirm('Tem certeza que deseja remover esta transação?')) {
+                        this.conta.removerTransacao(transacaoId);
+                        this.render();
+                    }
+                }
+            }
+        });
+
+        document.addEventListener('transacao-adicionada', () => {
+            this.render();
+        });
     }
 }

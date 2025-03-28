@@ -1,7 +1,7 @@
 export class ModalComponent {
     static mostrar(mensagem: string) {
-        const modal = document.getElementById("modal") as HTMLDivElement;
-        const modalMessage = document.getElementById("modalMessage") as HTMLParagraphElement;
+        const modal = document.getElementById("#modal") as HTMLDivElement;
+        const modalMessage = document.getElementById("#modalMessage") as HTMLParagraphElement;
 
         if (!modal || !modalMessage) {
             console.error("Elementos do modal não encontrados no DOM.");
