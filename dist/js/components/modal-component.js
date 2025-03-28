@@ -1,7 +1,7 @@
 export class ModalComponent {
     static mostrar(mensagem) {
-        const modal = document.getElementById("modal");
-        const modalMessage = document.getElementById("modalMessage");
+        const modal = document.getElementById("#modal");
+        const modalMessage = document.getElementById("#modalMessage");
         if (!modal || !modalMessage) {
             console.error("Elementos do modal não encontrados no DOM.");
             return;
