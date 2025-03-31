@@ -2,26 +2,36 @@ import { Transacao } from "../types/Transacao.js";
 import { Conta } from "../types/Conta.js";
 import { formatarMoeda } from "../utils/formatters.js";
 
+declare const bootstrap: any; //Declaração para o Bootstrap globalmente para os modais funcionarem
+
 export default class ExtratoComponent {
     private tabela: HTMLTableSectionElement;
     private saldoTotal: HTMLElement;
     private conta: Conta;
+    private excluirModal: any;
+    private confirmDeleteBtn: HTMLButtonElement;
+    private transacaoParaExcluir: string | null = null;
 
+    //inicializa modal de exclusão
     constructor(conta: Conta) {
-        const tabelaElement = document.querySelector('#listaTransacoes') as HTMLTableSectionElement;
-        const saldoElement = document.querySelector('#saldoTotal') as HTMLElement;
+        this.conta = conta;
+        this.tabela = document.getElementById('listaTransacoes') as HTMLTableSectionElement;
+        this.saldoTotal = document.getElementById('saldoTotal') as HTMLElement;
+        
+        //Inicialização do modal de  - ver com igor ao colocar # por ser id quebra o código
+        const modalElement = document.getElementById('excluirModal');
+        this.excluirModal = new bootstrap.Modal(modalElement);
+        this.confirmDeleteBtn = document.getElementById('confirmDelete') as HTMLButtonElement;
 
-        if (!tabelaElement || !saldoElement) {
-            throw new Error("Elementos do extrato não encontrados no DOM");
+        if (!this.tabela || !this.saldoTotal || !modalElement || !this.confirmDeleteBtn) {
+            throw new Error("Elementos do extrato não encontrados");
         }
 
-        this.tabela = tabelaElement;
-        this.saldoTotal = saldoElement;
-        this.conta = conta;
         this.render();
         this.setupEventListeners();
     }
 
+    //Limpa e recria a tabela com as transações
     private render(): void {
         this.tabela.innerHTML = '';
         const transacoes = this.conta.getTransacoes();
@@ -52,6 +62,7 @@ export default class ExtratoComponent {
         this.saldoTotal.textContent = formatarMoeda(this.conta.getSaldo());
     }
 
+    //clica no link da lixeira
     private setupEventListeners(): void {
         this.tabela.addEventListener('click', (event) => {
             const target = event.target as HTMLElement;
@@ -60,16 +71,39 @@ export default class ExtratoComponent {
             if (btnRemover) {
                 const transacaoId = btnRemover.getAttribute('data-id');
                 if (transacaoId) {
-                    if (confirm('Tem certeza que deseja remover esta transação?')) {
-                        this.conta.removerTransacao(transacaoId);
-                        this.render();
-                    }
+                    this.prepararExclusao(transacaoId);
                 }
             }
         });
 
+        //confirma deletação
+        this.confirmDeleteBtn.addEventListener('click', () => {
+            if (this.transacaoParaExcluir) {
+                this.conta.removerTransacao(this.transacaoParaExcluir);
+                this.render();
+                this.excluirModal.hide();
+                this.transacaoParaExcluir = null;
+            }
+        });
+        //Atualiza quando nova transação é adicionada
         document.addEventListener('transacao-adicionada', () => {
             this.render();
         });
+    }
+
+    //encontra a transacao e preenche o modal, trazendo as informações por id.
+    private prepararExclusao(transacaoId: string): void {
+        const transacao = this.conta.getTransacoes().find(t => t.id === transacaoId);
+        if (!transacao) return;
+
+        this.transacaoParaExcluir = transacaoId;
+        
+        //Preenchimento do modal
+        document.getElementById('modalItemExcluir')!.textContent = transacao.mercadoria;
+        document.getElementById('modalQuantidadeExcluir')!.textContent = transacao.quantidade.toString();
+        document.getElementById('modalValorExcluir')!.textContent = formatarMoeda(transacao.valor);
+
+        //Visualização do modal
+        this.excluirModal.show();
     }
 }

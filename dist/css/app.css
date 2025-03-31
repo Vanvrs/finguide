@@ -1,5 +1,3 @@
-
-
 body {
     background-color: #201924;
 }
@@ -72,12 +70,145 @@ main {
     background-color: #8d5dfc;
 }
 
-.modal-content{
+.modal-content {
     background-color: #322C3A; 
     color: #E2E2E2;
 }
 
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+.saldo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #322C3A;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+.saldo-label {
+    color: #E2E2E2;
+    font-family: 'Murecho', sans-serif;
+    font-size: 18px;
+}
+
+.saldo-valor {
+    font-family: 'Murecho', sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    color: #AD8AFF !important;
+}
+
+.table {
+    margin-top: 0;
+}
+
+.table thead th {
+    border-bottom: 1px solid #AD8AFF;
+}
+
+
+.text-danger {
+    color: #ff6b6b !important;
+}
+
+.text-success {
+    color: #51cf66 !important;
+}
+
+.btn-remover {
+    background: transparent;
+    border: none;
+    color: #6c757d;
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.btn-remover:hover {
+    color: #adb5bd !important;
+}
+
+.btn-remover i {
+    font-size: 1.2rem;
+}
+
+
+.pagina-extrato .logo-ipad,
+.pagina-extrato .logo-celular {
+    display: none !important;
+}
+
+.alert-success {
+    background-color: #51cf66;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.btn-remover {
+    background: transparent;
+    border: none;
+    color: #585253;
+    padding: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+   
+}
+
+.btn-remover:hover {
+    color: #ff6b6b;
+    transform: scale(1.1);
+}
+
+.table-dark {
+    background-color: #322C3A;
+    color: #E2E2E2;
+}
+
+.table-dark th,
+.table-dark td {
+    border-color: #454545;
+    vertical-align: middle;
+}
+/* Estilos para os modais */
+.modal-content {
+    background-color: #322C3A;
+    color: #E2E2E2;
+    border: 1px solid #AD8AFF;
+}
+
+.modal-header {
+    border-bottom: 1px solid #AD8AFF;
+}
+
+.modal-footer {
+    border-top: 1px solid #AD8AFF;
+}
+
+.btn-close {
+    filter: invert(1);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Estilo para o modal de sucesso */
+#sucessoModal .modal-body {
+    color: #51cf66;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+@media (min-width: 992px) {
     .pagina-transacao {
         background-color: #322C3A;
     }
@@ -101,13 +232,22 @@ main {
 
     .form-select:focus,
     .form-control:focus {
-    background-color: #201924;
-    color: #E2E2E2;
-    box-shadow: none;
+        background-color: #201924;
+        color: #E2E2E2;
+        box-shadow: none;
     }
 
+    
+    #btnNovaTransacao {
+        display: none;
+    }
+    
+    
     .pagina-extrato {
-        display: block;
+        display: block !important;
     }
-} 
-
+    
+    .pagina-transacao {
+        display: block !important;
+    }
+}

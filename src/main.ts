@@ -8,7 +8,8 @@ try {
     new NovaTransacaoComponent(conta);
     new ExtratoComponent(conta);
 
-    //Configura navegação
+    //Configura navegação atraves do eventos dom
+    //ver com igor porque ao usar # para buscar por id quebra o código
     document.getElementById('btnVisualizarExtrato')?.addEventListener('click', () => {
         document.querySelector('.pagina-transacao')?.classList.add('d-none');
         document.querySelector('.pagina-extrato')?.classList.remove('d-none');

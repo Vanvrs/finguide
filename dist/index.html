@@ -1,4 +1,6 @@
+<!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,16 +9,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Murecho&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" a href="/dist/css/app.css">
+    <link rel="stylesheet" href="/dist/css/app.css">
 </head>
+
 <body>
     <div class="container">
         <div class="row">
-           
-            <section class="pagina-transacao col-lg-4 ">
+            <section class="pagina-transacao col-lg-4">
                 <section>
                     <header class="py-5">
-                        <h1 class="d-inline-flex align-items-center fs-lg-3 ">
+                        <h1 class="d-inline-flex align-items-center fs-lg-3">
                             <img src="/dist/images/Group 3_inicio.png" alt="Logo Fin Guide" class="logo-celular">
                             <img src="/dist/images/Group 3_extrato.png" alt="Logo Fin Guide" class="logo-ipad">
                         </h1>
@@ -35,16 +37,19 @@
                             </div>
                             <div class="mb-4">
                                 <label for="mercadoria" class="form-label">Mercadoria</label>
-                                <input type="text" class="form-control input-altura" id="mercadoria" placeholder="Produto" required>
+                                <input type="text" class="form-control input-altura" id="mercadoria"
+                                    placeholder="Produto" required>
                             </div>
                             <div class="row mb-4">
                                 <div class="col-6">
                                     <label for="quantidade" class="form-label">Quantidade</label>
-                                    <input type="number" class="form-control input-altura" id="quantidade" placeholder="00" min="1" required>
+                                    <input type="number" class="form-control input-altura" id="quantidade"
+                                        placeholder="00" min="1" required>
                                 </div>
                                 <div class="col-6">
                                     <label for="valor" class="form-label">Valor</label>
-                                    <input type="number" step="0.01" class="form-control input-altura" id="valor" placeholder="R$ 0,00" min="0.01" required>
+                                    <input type="number" step="0.01" class="form-control input-altura" id="valor"
+                                        placeholder="R$ 0,00" min="0.01" required>
                                 </div>
                             </div>
                             <div class="mt-4 d-flex flex-column gap-4 mb-4">
@@ -56,17 +61,19 @@
                 </section>
             </section>
 
-            <section class="pagina-extrato col-lg-8 ">
+            <section class="pagina-extrato col-lg-8">
                 <section class="container pt-0 pb-5 px-4">
                     <section>
                         <header class="py-5">
                             <h1 class="d-inline-flex align-items-center">
-                                <img src="/dist/images/Group 3_extrato.png" alt="Imagem da logo Fin Guide" class="logo-celular">
-                                <img src="/dist/images/Group 3_extrato.png" alt="Imagem da logo Fin Guide" class="logo-ipad"> 
+                                <img src="/dist/images/Group 3_extrato.png" alt="Imagem da logo Fin Guide"
+                                    class="logo-celular">
+                                <img src="/dist/images/Group 3_extrato.png" alt="Imagem da logo Fin Guide"
+                                    class="logo-ipad">
                             </h1>
                         </header>
                     </section>
-                    <h2 class="titulo mb-4 ">Extrato</h2>
+                    <h2 class="titulo mb-4">Extrato</h2>
                     <table class="table table-dark table-striped">
                         <thead>
                             <tr>
@@ -75,13 +82,10 @@
                                 <th scope="col">Quantidade</th>
                                 <th scope="col">Valor Unitário</th>
                                 <th scope="col">Total</th>
-                                <th scope="col"> </i> Ações</th>
-                                
+                                <th scope="col">Ações</th>
                             </tr>
                         </thead>
-                        <tbody id="listaTransacoes">
-                            
-                        </tbody>
+                        <tbody id="listaTransacoes"></tbody>
                         <tfoot>
                             <tr>
                                 <td colspan="5" class="text-end"><strong>SALDO TOTAL</strong></td>
@@ -97,18 +101,18 @@
         </div>
     </div>
 
-
+    <!-- Modal de Confirmação -->
     <div class="modal fade" id="adicionarModal" tabindex="-1" aria-labelledby="adicionarModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" >
+            <div class="modal-content">
                 <div class="modal-header border-0">
-                    <h5 class="modal-title" id="adicionarModalLabel">Confirma a adição do produto? </h5>
+                    <h5 class="modal-title" id="adicionarModalLabel">Confirma a adição do produto?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Item:</strong><span id="modalItemAdicionar">Notebook</span></p>
-                    <p><strong>Quantidade:</strong><span id="modalQuantidadeAdicionar">2</span></p>
-                    <p><strong>Valor:</strong><span id="modalValorAdicionar">R$ 5.000,00</span></p>
+                    <p><strong>Item:</strong> <span id="modalItemAdicionar"></span></p>
+                    <p><strong>Quantidade:</strong> <span id="modalQuantidadeAdicionar"></span></p>
+                    <p><strong>Valor:</strong> <span id="modalValorAdicionar"></span></p>
                 </div>
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -118,18 +122,18 @@
         </div>
     </div>
 
-  
+    <!-- Modal de Exclusão -->
     <div class="modal fade" id="excluirModal" tabindex="-1" aria-labelledby="excluirModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header border-0">
-                    <h5 class="modal-title " id="excluirModalLabel" >Confirma a exclusão do produto?</h5>
+                    <h5 class="modal-title" id="excluirModalLabel">Confirma a exclusão do produto?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Item:</strong><span id="modalItemExcluir">Notebook</span></p>
-                    <p><strong>Quantidade:</strong><span id="modalQuantidadeExcluir">2</span></p>
-                    <p><strong>Valor:</strong><span id="modalValorExcluir">R$ 5.000,00</span></p>
+                    <p><strong>Item:</strong> <span id="modalItemExcluir"></span></p>
+                    <p><strong>Quantidade:</strong> <span id="modalQuantidadeExcluir"></span></p>
+                    <p><strong>Valor:</strong> <span id="modalValorExcluir"></span></p>
                 </div>
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -139,8 +143,9 @@
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="/dist/main.js"></script>
 </body>
-</html>
 
+</html>

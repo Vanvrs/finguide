@@ -6,7 +6,8 @@ const conta = new Conta();
 try {
     new NovaTransacaoComponent(conta);
     new ExtratoComponent(conta);
-    //Configura navegação
+    //Configura navegação atraves do eventos dom
+    //ver com igor porque ao usar # para buscar por id quebra o código
     (_a = document.getElementById('btnVisualizarExtrato')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
         var _a, _b;
         (_a = document.querySelector('.pagina-transacao')) === null || _a === void 0 ? void 0 : _a.classList.add('d-none');
