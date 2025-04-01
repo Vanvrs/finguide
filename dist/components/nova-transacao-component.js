@@ -66,7 +66,7 @@ export default class NovaTransacaoComponent {
             const saldoAtual = this.conta.getSaldo();
             const valorTotalCompra = quantidade * valor;
             if (saldoAtual <= 0) {
-                alert('Saldo insuficiente para realizar compras. Seu saldo atual é zero ou negativo.');
+                alert('Saldo insuficiente para realizar compras. Seu saldo atual � zero ou negativo.');
                 return;
             }
             if (valorTotalCompra > saldoAtual) {
@@ -81,11 +81,11 @@ export default class NovaTransacaoComponent {
     }
     validarCampos(mercadoria, quantidade, valor) {
         if (!mercadoria || mercadoria.length > 35) {
-            alert('Nome do produto deve ter até 35 caracteres');
+            alert('Nome do produto deve ter at� 35 caracteres');
             return false;
         }
         if (isNaN(quantidade) || quantidade <= 0) {
-            alert('Quantidade deve ser um número positivo');
+            alert('Quantidade deve ser um n�mero positivo');
             return false;
         }
         if (isNaN(valor) || valor <= 0) {
@@ -101,7 +101,7 @@ export default class NovaTransacaoComponent {
         const valorInput = document.getElementById('valor').value;
         const valor = formatarInputMoeda(valorInput);
         if (isNaN(valor) || valor <= 0) {
-            alert('Valor inválido!');
+            alert('Valor inv�lido!');
             return;
         }
         const transacao = new Transacao(tipo, mercadoria, quantidade, valor);
