@@ -1,34 +1,31 @@
-import { Transacao } from "./Transacao.js";
+import { Armazenador } from "./Armazenador.js";
 export class Conta {
     constructor() {
-        this.transacoes = [];
-        this.carregarTransacoes();
+        this.transacoes = Armazenador.obter("transacoes") || [];
     }
-    adicionarTransacao(tipo, valor, mercadoria, quantidade) {
-        const transacao = new Transacao(tipo, mercadoria, quantidade, valor);
+    getTransacoes() {
+        return this.transacoes;
+    }
+    getSaldo() {
+        return this.transacoes.reduce((acumulador, transacao) => {
+            return transacao.tipo === 'COMPRA'
+                ? acumulador - transacao.total
+                : acumulador + transacao.total;
+        }, 0);
+    }
+    getTotalGeral() {
+        return this.transacoes.reduce((total, transacao) => {
+            return total + transacao.total;
+        }, 0);
+    }
+    adicionarTransacao(transacao) {
         this.transacoes.push(transacao);
-        this.salvarTransacoes();
+        Armazenador.salvar("transacoes", this.transacoes);
+        document.dispatchEvent(new CustomEvent('saldo-atualizado'));
     }
     removerTransacao(id) {
         this.transacoes = this.transacoes.filter(t => t.id !== id);
-        this.salvarTransacoes();
-    }
-    getTransacoes() {
-        return [...this.transacoes];
-    }
-    getSaldo() {
-        return this.transacoes.reduce((total, t) => {
-            return t.tipo === 'COMPRA' ? total - t.total : total + t.total;
-        }, 0);
-    }
-    salvarTransacoes() {
-        localStorage.setItem('transacoes', JSON.stringify(this.transacoes));
-    }
-    carregarTransacoes() {
-        const transacoesSalvas = localStorage.getItem('transacoes');
-        if (transacoesSalvas) {
-            const transacoesParsed = JSON.parse(transacoesSalvas);
-            this.transacoes = transacoesParsed.map((t) => new Transacao(t.tipo, t.mercadoria, t.quantidade, t.valor, new Date(t.data)));
-        }
+        Armazenador.salvar("transacoes", this.transacoes);
+        document.dispatchEvent(new CustomEvent('saldo-atualizado'));
     }
 }

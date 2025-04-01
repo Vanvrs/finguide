@@ -2,19 +2,22 @@ import { formatarMoeda } from "../utils/formatters.js";
 export class SaldoComponent {
     constructor(conta) {
         this.conta = conta;
-        const saldoElement = document.getElementById('saldoTotal');
-        if (!saldoElement) {
-            throw new Error("Elemento 'saldoTotal' não encontrado no DOM!");
-        }
-        this.elementoSaldo = saldoElement;
+        this.elementoSaldoTotal = document.getElementById('saldoTotal');
+        this.elementoSaldoHeader = document.getElementById('saldoHeader');
         this.atualizar();
+        this.configurarEventListeners();
+    }
+    configurarEventListeners() {
+        document.addEventListener('transacao-adicionada', () => this.atualizar());
+        document.addEventListener('transacao-removida', () => this.atualizar());
     }
     atualizar() {
-        try {
-            this.elementoSaldo.textContent = formatarMoeda(this.conta.getSaldo());
-        }
-        catch (error) {
-            console.error('Erro ao atualizar saldo:', error);
-        }
+        const saldo = this.conta.getSaldo();
+        const saldoFormatado = formatarMoeda(saldo);
+        this.elementoSaldoTotal.textContent = saldoFormatado;
+        this.elementoSaldoHeader.textContent = saldoFormatado;
+        const classeCor = saldo >= 0 ? 'texto-roxo' : 'text-danger';
+        this.elementoSaldoTotal.className = classeCor;
+        this.elementoSaldoHeader.className = classeCor;
     }
 }

@@ -2,26 +2,31 @@ import { Conta } from "../types/Conta.js";
 import { formatarMoeda } from "../utils/formatters.js";
 
 export class SaldoComponent {
-    private conta: Conta;
-    private elementoSaldo: HTMLElement;
+    private elementoSaldoTotal: HTMLElement;
+    private elementoSaldoHeader: HTMLElement;
 
-    constructor(conta: Conta) {
-        this.conta = conta;
+    constructor(private conta: Conta) {
+        this.elementoSaldoTotal = document.getElementById('saldoTotal') as HTMLElement;
+        this.elementoSaldoHeader = document.getElementById('saldoHeader') as HTMLElement;
         
-        const saldoElement = document.getElementById('saldoTotal');
-        if (!saldoElement) {
-            throw new Error("Elemento 'saldoTotal' não encontrado no DOM!");
-        }
-
-        this.elementoSaldo = saldoElement;
         this.atualizar();
+        this.configurarEventListeners();
+    }
+
+    private configurarEventListeners(): void {
+        document.addEventListener('transacao-adicionada', () => this.atualizar());
+        document.addEventListener('transacao-removida', () => this.atualizar());
     }
 
     public atualizar(): void {
-        try {
-            this.elementoSaldo.textContent = formatarMoeda(this.conta.getSaldo());
-        } catch (error) {
-            console.error('Erro ao atualizar saldo:', error);
-        }
+        const saldo = this.conta.getSaldo();
+        const saldoFormatado = formatarMoeda(saldo);
+        
+        this.elementoSaldoTotal.textContent = saldoFormatado;
+        this.elementoSaldoHeader.textContent = saldoFormatado;
+        
+        const classeCor = saldo >= 0 ? 'texto-roxo' : 'text-danger';
+        this.elementoSaldoTotal.className = classeCor;
+        this.elementoSaldoHeader.className = classeCor;
     }
 }
