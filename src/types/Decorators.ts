@@ -1,4 +1,4 @@
-export function ValidaDebito(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+/* export function ValidaDebito(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
     
     descriptor.value = function (this: any, valorDoDebito: number) {
@@ -14,4 +14,4 @@ export function ValidaDebito(target: any, propertyKey: string, descriptor: Prope
     }
     
     return descriptor;
-}
+} */

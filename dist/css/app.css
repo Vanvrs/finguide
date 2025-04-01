@@ -1,5 +1,4 @@
 
-
 /*Cores*/
 :root {
     --roxo-principal: #AD8AFF;
@@ -21,7 +20,7 @@ body {
     background-color: var(--roxo-claro);
 }
 
-/* P√°gina de transa√ß√£o */
+/* P·gina de transaÁ„o */
 .pagina-transacao {
     background-color: var(--roxo-claro);
 }
@@ -32,7 +31,7 @@ body {
     }
 }
 
-/* T√≠tulos */
+/* TÌ≠tulos */
 .titulo {
     color: var(--branco);
     font-weight: 500;
@@ -40,7 +39,7 @@ body {
     line-height: 100%;
 }
 
-/* Formul√°rios */
+/* Formul·rios */
 .form-label {
     color: #C1C0C1;
     font-weight: 400;
@@ -67,7 +66,7 @@ body {
     height: 50px;
 }
 
-/* Bot√µes */
+/* Botıes */
 .btn-roxo {
     background-color: var(--roxo-principal);
     color: var(--roxo-escuro);
@@ -108,7 +107,7 @@ body {
     margin-bottom: 0;
 }
 
-/* Rodap√© da tabela */
+/* RodapÈ da tabela */
 .total-geral-container {
     display: inline-block;
 }
@@ -138,7 +137,7 @@ body {
     gap: 15px;
 }
 
-/* Bot√µes dos modais */
+/* Botıes dos modais */
 .btn-modal-cancelar {
     background-color: transparent;
     color: var(--roxo-principal);
@@ -170,7 +169,7 @@ body {
     color: var(--roxo-escuro);
 }
 
-/* √çcones */
+/* Icones */
 .btn-remover {
     background: transparent;
     border: none;
