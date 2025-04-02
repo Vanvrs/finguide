@@ -8,7 +8,7 @@ declare const bootstrap: any;
 
 //Classe principal do componente de extrato
 export default class ExtratoComponent {
-    s
+    
     private tabela: HTMLTableSectionElement;
     private totalGeral: HTMLElement;
     private saldoHeader: HTMLElement;

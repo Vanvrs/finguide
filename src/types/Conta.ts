@@ -26,10 +26,10 @@ export class Conta {
     }
 
     public adicionarTransacao(transacao: Transacao): void {
-        //Adiciona a transação ao array
+        //Adiciona a transaÃ§Ã£o ao array
         this.transacoes.push(transacao);
         Armazenador.salvar("transacoes", this.transacoes);
-        //atualização do saldo
+        //atualizaÃ§Ã£o do saldo
         document.dispatchEvent(new CustomEvent('saldo-atualizado'));
     }
 

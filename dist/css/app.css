@@ -1,4 +1,3 @@
-
 /*Cores*/
 :root {
     --roxo-principal: #AD8AFF;
@@ -20,14 +19,10 @@ body {
     background-color: var(--roxo-claro);
 }
 
-/* Página de transação */
 .pagina-transacao {
     background-color: var(--roxo-claro);
 }
 
-
-
-/* Tí­tulos */
 .titulo {
     color: var(--branco);
     font-weight: 500;
@@ -62,27 +57,11 @@ body {
     height: 50px;
 }
 
-/* Estilo para placeholders dos inputs */
 .form-control::placeholder {
     color: var(--cinza-claro);
-    opacity: 1; /* Necessário para Firefox */
+    opacity: 1; 
 }
 
-/* Estilos específicos para cada navegador */
-.form-control::-webkit-input-placeholder { /* Chrome/Edge/Safari */
-    color: var(--cinza-claro);
-}
-.form-control::-moz-placeholder { /* Firefox 19+ */
-    color: var(--cinza-claro);
-    opacity: 1;
-}
-.form-control:-ms-input-placeholder { /* IE 10+ */
-    color: var(--cinza-claro);
-}
-.form-control:-moz-placeholder { /* Firefox 18- */
-    color: var(--cinza-claro);
-    opacity: 1;
-}
 /* Botões */
 .btn-roxo {
     background-color: var(--roxo-principal);
@@ -112,7 +91,6 @@ body {
     color: var(--branco);
 }
 
-
 .table-responsive {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -123,18 +101,12 @@ body {
 .table {
     margin-bottom: 0;
 }
-/* total geral */
-
-.total-geral-container {
-    display: inline-block;
-    
-}
 
 .texto-roxo {
     color: var(--roxo-principal) !important;
 }
 
-/* Modais */
+/* Modais de adição e exclusão */
 .modal-content {
     background-color: var(--roxo-claro);
     color: var(--branco);
@@ -170,7 +142,7 @@ body {
     background-color: rgba(173, 138, 255, 0.1);
     color: var(--roxo-principal);
 }
-/* Botão de confirmação */
+/* Botão de confirmação do modal*/
 .btn-modal-confirmar {
     background-color: var(--roxo-principal);
     color: var(--roxo-escuro);
@@ -202,36 +174,11 @@ body {
     transform: scale(1.1);
 }
 
-/* Barra de rolagem */
-.table-responsive::-webkit-scrollbar {
-    height: 8px;
-}
-
-.table-responsive::-webkit-scrollbar-track {
-    background: var(--roxo-claro);
-    border-radius: 10px;
-}
-
-.table-responsive::-webkit-scrollbar-thumb {
-    background: var(--roxo-principal);
-    border-radius: 10px;
-}
-
-.table-responsive::-webkit-scrollbar-thumb:hover {
-    background: #8d5dfc;
-}
-
-
 /* Ajustes para o rodapé da tabela */
 .table-dark tfoot tr td {
     padding-top: 1rem;
     padding-bottom: 1rem;
     border-top: 2px solid var(--roxo-principal);
-}
-
-/* Container do total geral */
-.total-geral-container {
-    width: 100%;
 }
 
 /* Flex container para alinhamento */
@@ -242,18 +189,6 @@ body {
     width: 100%;
 }
 
-/* Estilo para o texto "TOTAL GERAL" */
-.total-geral-container strong {
-    font-weight: 600;
-    color: var(--roxo-principal);
-}
-
-/* Estilo para o valor */
-.total-geral-container span {
-    font-weight: 600;
-    color: var(--roxo-principal);
-    margin-left: 1rem;
-}
 /*  Responsividade */
 @media (max-width: 991.98px) {
     .table thead th {
@@ -279,11 +214,6 @@ body {
         background-color: var(--roxo-claro);
     }
 }
-/* @media (min-width: 992px) {
-    .pagina-transacao {
-        background-color: var(--roxo-claro);
-    }
-} */
 
 /* telas menores */
 @media (max-width: 575.98px) {

@@ -1,7 +1,7 @@
 import { TipoTransacao } from "./TipoTransacao.js";
 
 export class Transacao {
-    public id: string; //essa propriedade armazenará um ID único para a transação
+    public id: string; //essa propriedade armazena um ID Ãºnico para a transaÃ§Ã£o
 
     constructor(
         public tipo: TipoTransacao,
@@ -10,16 +10,16 @@ export class Transacao {
         public valor: number,
         public data: Date = new Date()
     ) {
-        //Gera um ID aleatório quando a transação é criada
+        //Gera um ID aleatÃ³rio quando a transaÃ§Ã£o Ã© criada
         this.id = Math.random().toString(36).substring(2, 9);
     }
 
-    //valor total da transação (quantidade × valor unitário)
+    //valor total da transaÃ§Ã£o (quantidade Ã© valor unitÃ¡rio)
     get total(): number {
         return this.quantidade * this.valor;
     }
 
-    //Método para serialização do objeto em JSON
+    //MÃ©todo para serializaÃ§Ã£o do objeto em JSON
     toJSON() {
         return {
             id: this.id,
