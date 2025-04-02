@@ -8,11 +8,11 @@ export const formatarMoeda = (valor: number): string => {
         maximumFractionDigits: 2
     }).replace(/\u00A0/g, ' ');
 };
-
+//Converte uma string de valor monetário para número
 export const formatarInputMoeda = (valor: string): number => {
-    const valorLimpo = valor.replace(/[^\d,]/g, '').replace(',', '.');
+    const valorLimpo = valor.replace(/[^\d,]/g, '').replace(',', '.');  //Substitui vírgula decimal por ponto
     const valorNumerico = parseFloat(valorLimpo);
-    return isNaN(valorNumerico) ? 0 : valorNumerico;
+    return isNaN(valorNumerico) ? 0 : valorNumerico;//Retorna 0 se a conversão resultar em NaN (Not a Number)
 };
 
 export const formatarData = (data: Date, formato: FormatoData = FormatoData.PADRAO): string => {

@@ -1,38 +1,51 @@
+
 import { Conta } from "../types/Conta.js";
 import { formatarMoeda } from "../utils/formatters.js";
 import { GrupoTransacao } from "../types/GrupoTransacao.js";
 import { FormatoData } from "../types/FormatoData.js";
 
+// Declaração do Bootstrap (usado para modais)
 declare const bootstrap: any;
 
+// Classe principal do componente de extrato
 export default class ExtratoComponent {
-    private tabela: HTMLTableSectionElement;
-    private totalGeral: HTMLElement;
-    private saldoHeader: HTMLElement;
-    private conta: Conta;
-    private excluirModal: any;
-    private confirmDeleteBtn: HTMLButtonElement;
-    private transacaoParaExcluir: string | null = null;
+    // Elementos DOM
+    private tabela: HTMLTableSectionElement;          // Tabela que lista as transações
+    private totalGeral: HTMLElement;                 // Elemento que mostra o total geral
+    private saldoHeader: HTMLElement;                // Elemento que mostra o saldo
+    private conta: Conta;                            // Instância da conta com os dados
+    private excluirModal: any;                       // Modal para confirmação de exclusão
+    private confirmDeleteBtn: HTMLButtonElement;     // Botão de confirmação no modal
+    private transacaoParaExcluir: string | null = null; // ID da transação a ser excluída
 
+    // Construtor - inicializa o componente
     constructor(conta: Conta) {
-        this.conta = conta;
+        this.conta = conta; // Recebe a conta como parâmetro
+        
+        // Obtém referências aos elementos do DOM
         this.tabela = document.getElementById('listaTransacoes') as HTMLTableSectionElement;
         this.totalGeral = document.getElementById('totalGeral') as HTMLElement;
         this.saldoHeader = document.getElementById('saldoHeader') as HTMLElement;
         
+        // Configura o modal de exclusão usando Bootstrap
         const modalElement = document.getElementById('excluirModal');
         this.excluirModal = new bootstrap.Modal(modalElement);
         this.confirmDeleteBtn = document.getElementById('confirmDelete') as HTMLButtonElement;
 
+        // Renderiza o componente inicialmente
         this.render();
+        // Configura os listeners de eventos
         this.setupEventListeners();
     }
 
+    // Agrupa transações por data para exibição organizada
     private agruparTransacoes(): GrupoTransacao[] {
         const transacoes = this.conta.getTransacoes();
         const grupos: GrupoTransacao[] = [];
+        // Ordena transações por data (mais recente primeiro)
         const transacoesOrdenadas = [...transacoes].sort((a, b) => b.data.getTime() - a.data.getTime());
 
+        // Agrupa transações pela mesma data
         for (const transacao of transacoesOrdenadas) {
             const dataTransacao = transacao.data.toDateString();
             const grupoExistente = grupos.find(grupo => grupo.label === dataTransacao);
@@ -50,6 +63,7 @@ export default class ExtratoComponent {
         return grupos;
     }
 
+   /*  //Formata datas conforme o padrão especificado
     private formatarData(data: Date, formato: FormatoData = FormatoData.PADRAO): string {
         if (formato === FormatoData.DIA_SEMANA_DIA_MES_ANO) {
             return data.toLocaleDateString('pt-BR', {
@@ -67,18 +81,24 @@ export default class ExtratoComponent {
 
         return data.toLocaleDateString('pt-BR');
     }
-
+ */
+    //Renderiza o componente na tela
     private render(): void {
-        this.tabela.innerHTML = '';
+        //Limpa a tabela
+        this.tabela.innerHTML = ''; 
         const transacoes = this.conta.getTransacoes();
 
+        //Se não houver transações, exibe mensagem
         if (transacoes.length === 0) {
-            this.tabela.innerHTML = `<tr><td colspan="6">Nenhuma transaÃ§Ã£o cadastrada</td></tr>`;
+            this.tabela.innerHTML = `<tr><td colspan="6">Nenhuma transação cadastrada</td></tr>`;
         } else {
+            //Para cada transação, cria uma linha na tabela
             transacoes.forEach(transacao => {
+                //Define classe CSS baseada no tipo (COMPRA = negativo, outros = positivo)
                 const sinalClasse = transacao.tipo === 'COMPRA' ? 'text-danger' : 'text-success';
                 const row = document.createElement('tr');
                 
+                //Preenche a linha com os dados da transação
                 row.innerHTML = `
                     <td class="${sinalClasse}">${transacao.tipo === 'COMPRA' ? '-' : '+'}</td>
                     <td class="limitado" title="${transacao.mercadoria}">${transacao.mercadoria}</td>
@@ -95,21 +115,26 @@ export default class ExtratoComponent {
             });
         }
 
+        //Atualiza os totais e saldo
         this.atualizarTotais();
     }
 
+    //Atualiza os valores totais e saldo no cabeçalho
     private atualizarTotais(): void {
         const totalGeral = this.conta.getTotalGeral();
         const saldo = this.conta.getSaldo();
         
+        // Formata e exibe os valores
         this.totalGeral.textContent = formatarMoeda(totalGeral);
         this.saldoHeader.textContent = formatarMoeda(saldo);
         
+        // Muda a cor conforme o saldo (positivo/negativo)
         const classeCor = saldo >= 0 ? 'texto-roxo' : 'text-danger';
         this.saldoHeader.className = classeCor;
     }
 
     private setupEventListeners(): void {
+        //evento para remoção)
         this.tabela.addEventListener('click', (event) => {
             const btnRemover = (event.target as HTMLElement).closest('.btn-remover');
             if (btnRemover) {
@@ -117,27 +142,32 @@ export default class ExtratoComponent {
             }
         });
 
+        //Botão de confirmação no modal de exclusão
         this.confirmDeleteBtn.addEventListener('click', () => {
             if (this.transacaoParaExcluir) {
+                //Remove a transação e atualiza a exibição
                 this.conta.removerTransacao(this.transacaoParaExcluir);
                 this.render();
                 this.excluirModal.hide();
+                //Dispara evento para notificar outros componentes
                 document.dispatchEvent(new CustomEvent('transacao-removida'));
             }
         });
 
+        //eventos globais de atualização
         document.addEventListener('transacao-adicionada', () => this.render());
         document.addEventListener('transacao-removida', () => this.render());
     }
 
+    //preparação a exclusão mostrando os dados no modal
     private prepararExclusao(id: string): void {
         const transacao = this.conta.getTransacoes().find(t => t.id === id);
         if (!transacao) return;
 
+        //Armazena o ID e preenche o modal com os dados
         this.transacaoParaExcluir = id;
         document.getElementById('modalItemExcluir')!.textContent = transacao.mercadoria;
         document.getElementById('modalQuantidadeExcluir')!.textContent = transacao.quantidade.toString();
         document.getElementById('modalValorExcluir')!.textContent = formatarMoeda(transacao.valor);
-        this.excluirModal.show();
-    }
-}
+        this.excluirModal.show(); 
+}}

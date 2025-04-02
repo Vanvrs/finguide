@@ -7,10 +7,11 @@ export const formatarMoeda = (valor) => {
         maximumFractionDigits: 2
     }).replace(/\u00A0/g, ' ');
 };
+//Converte uma string de valor monet�rio para n�mero
 export const formatarInputMoeda = (valor) => {
-    const valorLimpo = valor.replace(/[^\d,]/g, '').replace(',', '.');
+    const valorLimpo = valor.replace(/[^\d,]/g, '').replace(',', '.'); //Substitui v�rgula decimal por ponto
     const valorNumerico = parseFloat(valorLimpo);
-    return isNaN(valorNumerico) ? 0 : valorNumerico;
+    return isNaN(valorNumerico) ? 0 : valorNumerico; //Retorna 0 se a convers�o resultar em NaN (Not a Number)
 };
 export const formatarData = (data, formato = FormatoData.PADRAO) => {
     if (formato === FormatoData.DIA_SEMANA_DIA_MES_ANO) {
