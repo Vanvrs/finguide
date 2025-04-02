@@ -1,5 +1,5 @@
 import { formatarMoeda } from "../utils/formatters.js";
-//Respons�vel por exibir e atualizar o saldo
+//exibe e atualizar o saldo
 export class SaldoComponent {
     //inicializa o componente
     constructor(conta) {

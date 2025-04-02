@@ -5,7 +5,6 @@ export default class ExtratoComponent {
     constructor(conta) {
         this.transacaoParaExcluir = null;
         this.conta = conta; //Recebe a conta como par�metro
-        //Obt�m refer�ncias aos elementos do DOM
         this.tabela = document.getElementById('listaTransacoes');
         this.totalGeral = document.getElementById('totalGeral');
         this.saldoHeader = document.getElementById('saldoHeader');
@@ -15,7 +14,6 @@ export default class ExtratoComponent {
         this.confirmDeleteBtn = document.getElementById('confirmDelete');
         //Renderiza o componente inicialmente
         this.render();
-        // Configura os listeners de eventos
         this.setupEventListeners();
     }
     //Agrupa transa��es por data para exibi��o organizada
@@ -52,7 +50,7 @@ export default class ExtratoComponent {
         else {
             //Para cada transa��o, cria uma linha na tabela
             transacoes.forEach(transacao => {
-                //Define classe CSS baseada no tipo (COMPRA = negativo, outros = positivo)
+                //Define classe baseada no tipo (COMPRA = negativo, outros = positivo)
                 const sinalClasse = transacao.tipo === 'COMPRA' ? 'text-danger' : 'text-success';
                 const row = document.createElement('tr');
                 //Preenche a linha com os dados da transa��o
@@ -74,7 +72,7 @@ export default class ExtratoComponent {
         //Atualiza os totais e saldo
         this.atualizarTotais();
     }
-    //Atualiza os valores totais e saldo no cabe�alho
+    //Atualiza os valores totais e saldo
     atualizarTotais() {
         const totalGeral = this.conta.getTotalGeral();
         const saldo = this.conta.getSaldo();

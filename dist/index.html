@@ -1,38 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-    <!-- Metadados b√°sicos -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Fin Guide</title> 
-    
-    <!-- Importa√ß√µes de CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fin Guide</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Murecho&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="/dist/css/app.css"> 
+    <link rel="stylesheet" href="/dist/css/app.css">
 </head>
 
 <body>
     <!-- Container principal -->
     <div class="container-fluid vh-100">
         <div class="row h-100">
-            <!-- P·gina de TransaÁ„o -->
+            <!-- P√°gina de Transa√ß√£o -->
             <section class="pagina-transacao col-lg-4 p-0 bg-roxo-claro">
                 <div class="h-100 d-flex flex-column">
-              
+
                     <header class="py-3 py-lg-4 px-3 px-lg-4">
                         <h1 class="d-inline-flex align-items-center fs-lg-3">
-                            <img src="/dist/images/Group 3_inicio.png" alt="Logo Fin Guide" class="logo-celular">
+                            <img src="/dist/images/Group 3_extrato.png" alt="Logo Fin Guide" class="logo-celular">
                         </h1>
                     </header>
 
-                    <!-- Formul·rio de TransaÁ„o -->
+                    <!-- Formul√°rio de Transa√ß√£o -->
                     <main class="flex-grow-1 overflow-auto px-3 px-lg-4 pb-4">
                         <h2 class="titulo mb-3 mb-lg-4">Nova Transa√ß√£o</h2>
                         <form id="formTransacao">
-                            <!-- P·gina de Tipo de TransaÁ„o -->
+                            <!-- P√°gina de Tipo de Transa√ß√£o -->
                             <div class="mb-3 mb-lg-4">
                                 <label for="tipoTransacao" class="form-label">Tipo de Transa√ß√£o</label>
                                 <select class="form-select input-altura" id="tipoTransacao" required>
@@ -40,14 +38,14 @@
                                     <option value="VENDA">Venda</option>
                                 </select>
                             </div>
-                            
+
                             <!-- Campo de Mercadoria -->
                             <div class="mb-3 mb-lg-4">
                                 <label for="mercadoria" class="form-label">Mercadoria</label>
                                 <input type="text" class="form-control input-altura" id="mercadoria"
                                     placeholder="Produto" required maxlength="35">
                             </div>
-                            
+
                             <!-- Campos de Quantidade e Valor -->
                             <div class="row mb-3 mb-lg-4">
                                 <div class="col-6">
@@ -61,8 +59,8 @@
                                         placeholder="R$ 0,00" required>
                                 </div>
                             </div>
-                            
-                            <!-- Botıes de AdiÁ„o -->
+
+                            <!-- Bot√µes de Adi√ß√£o -->
                             <div class="d-flex flex-column gap-3 gap-lg-4 mb-3 mb-lg-4">
                                 <button type="submit" class="btn btn-roxo">Adicionar</button>
                                 <button type="button" class="btn btn-roxo d-lg-none"
@@ -73,7 +71,7 @@
                 </div>
             </section>
 
-            <!-- P·gina Extrato  -->
+            <!-- P√°gina Extrato  -->
             <section class="pagina-extrato col-lg-8 d-none d-lg-flex p-0">
                 <div class="h-100 d-flex flex-column w-100">
                     <header class="py-3 py-lg-4 px-3 px-lg-4">
@@ -92,7 +90,7 @@
                             </div>
                         </div>
 
-                        <!-- Tabela de TransaÁ„o -->
+                        <!-- Tabela de Transa√ß√£o -->
                         <div class="table-responsive">
                             <table class="table table-dark table-striped mb-0">
                                 <thead>
@@ -122,13 +120,14 @@
                                 </tfoot> -->
                                 <tfoot>
                                     <tr>
-                                        <td class="d-none d-sm-table-cell"></td> <
-                                        <td></td> <!-- Coluna Mercadoria -->
-                                        <td class="d-none d-md-table-cell"></td> <!-- Coluna Quantidade -->
-                                        <td class="d-none d-md-table-cell"></td> <!-- Coluna Valor Unit·rio -->
-                                        <td class="texto-roxo text-end"><strong>TOTAL GERAL:</strong></td> <!-- Coluna Total -->
-                                        <td class="texto-roxo text-end"><span id="totalGeral">R$ 0,00</span></td> <!-- Coluna AÁıes -->
-                                    </tr>
+                                        <td class="d-none d-sm-table-cell"></td>
+                                        < <td>
+                                            </td> 
+                                            <td class="d-none d-md-table-cell"></td> 
+                                            <td class="d-none d-md-table-cell"></td> 
+                                            <td class="texto-roxo text-end"><strong>TOTAL GERAL:</strong></td>
+                                            <td class="texto-roxo text-end"><span id="totalGeral">R$ 0,00</span></td>
+                                            </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -141,8 +140,7 @@
                 <div class="h-100 d-flex flex-column">
                     <header class="py-3 px-3">
                         <h1 class="d-inline-flex align-items-center">
-                            <img src="/dist/images/Group 3_extrato.png" alt="Logo Fin Guide"
-                                class="logo-celular">
+                            <img src="/dist/images/Group 3_extrato.png" alt="Logo Fin Guide" class="logo-celular">
                         </h1>
                     </header>
 
@@ -155,7 +153,7 @@
                                 <h4 id="saldoHeaderMobile">R$ 0,00</h4>
                             </div>
                         </div>
-                        <!-- Tabela de TransaÁ„o Mobile -->
+                        <!-- Tabela de Transa√ß√£o Mobile -->
                         <div class="table-responsive">
                             <table class="table table-dark table-striped mb-0">
                                 <thead>
@@ -182,10 +180,10 @@
                             </table>
                         </div>
 
-                        <!-- Bot„o de Nova TransaÁ„o para Mobile -->
+                        <!-- Bot√£o de Nova Transa√ß√£o para Mobile -->
                         <div class="mt-3">
-                            <button type="button" class="btn btn-roxo w-100" 
-                            id="btnNovaTransacao">Nova Transa√ß√£o</button>
+                            <button type="button" class="btn btn-roxo w-100" id="btnNovaTransacao">Nova
+                                Transa√ß√£o</button>
                         </div>
                     </div>
                 </div>
@@ -193,7 +191,7 @@
         </div>
     </div>
 
-    <!-- Modal de ConfirmaÁ„o de AdiÁ„o -->
+    <!-- Modal de Confirma√ß√£o de Adi√ß√£o -->
     <div class="modal fade" id="adicionarModal" tabindex="-1" aria-labelledby="adicionarModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-center">
@@ -218,7 +216,7 @@
         </div>
     </div>
 
-    <!-- Modal de Confirma√ß√£o de Exclus„o -->
+    <!-- Modal de Confirma√ß√£o de Exclus√£o -->
     <div class="modal fade" id="excluirModal" tabindex="-1" aria-labelledby="excluirModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-center">
@@ -247,4 +245,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="/dist/main.js"></script>
 </body>
+
 </html>

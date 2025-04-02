@@ -1,4 +1,3 @@
-
 import { Conta } from "../types/Conta.js";
 import { formatarMoeda } from "../utils/formatters.js";
 import { GrupoTransacao } from "../types/GrupoTransacao.js";
@@ -22,7 +21,6 @@ export default class ExtratoComponent {
     constructor(conta: Conta) {
         this.conta = conta; //Recebe a conta como parâmetro
 
-        //Obtém referências aos elementos do DOM
         this.tabela = document.getElementById('listaTransacoes') as HTMLTableSectionElement;
         this.totalGeral = document.getElementById('totalGeral') as HTMLElement;
         this.saldoHeader = document.getElementById('saldoHeader') as HTMLElement;
@@ -34,7 +32,6 @@ export default class ExtratoComponent {
 
         //Renderiza o componente inicialmente
         this.render();
-        // Configura os listeners de eventos
         this.setupEventListeners();
     }
 
@@ -62,7 +59,6 @@ export default class ExtratoComponent {
 
         return grupos;
     }
-
     //Renderiza o componente na tela
     private render(): void {
         //Limpa a tabela
@@ -75,7 +71,7 @@ export default class ExtratoComponent {
         } else {
             //Para cada transação, cria uma linha na tabela
             transacoes.forEach(transacao => {
-                //Define classe CSS baseada no tipo (COMPRA = negativo, outros = positivo)
+                //Define classe baseada no tipo (COMPRA = negativo, outros = positivo)
                 const sinalClasse = transacao.tipo === 'COMPRA' ? 'text-danger' : 'text-success';
                 const row = document.createElement('tr');
 
@@ -100,7 +96,7 @@ export default class ExtratoComponent {
         this.atualizarTotais();
     }
 
-    //Atualiza os valores totais e saldo no cabeçalho
+    //Atualiza os valores totais e saldo
     private atualizarTotais(): void {
         const totalGeral = this.conta.getTotalGeral();
         const saldo = this.conta.getSaldo();

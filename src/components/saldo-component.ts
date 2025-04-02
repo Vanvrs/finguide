@@ -1,7 +1,7 @@
 import { Conta } from "../types/Conta.js";
 import { formatarMoeda } from "../utils/formatters.js";
 
-//Responsável por exibir e atualizar o saldo
+//exibe e atualizar o saldo
 export class SaldoComponent {
      private elementoSaldoTotal: HTMLElement;  
     private elementoSaldoHeader: HTMLElement;  
@@ -35,8 +35,7 @@ export class SaldoComponent {
         //Atualiza o conteúdo dos elementos com o saldo formatado
         this.elementoSaldoTotal.textContent = saldoFormatado;
         this.elementoSaldoHeader.textContent = saldoFormatado;
-        
-        
+
         const classeCor = saldo >= 0 ? 'texto-roxo' : 'text-danger';
     
         this.elementoSaldoTotal.className = classeCor;
