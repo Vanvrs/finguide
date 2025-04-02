@@ -6,7 +6,7 @@ import { TipoTransacao } from "../types/TipoTransacao.js";
 //declara o Bootstrap para uso dos componentes
 declare const bootstrap: any;
 
-//Classe principal para o componente de nova transação
+//Classe principal para o componente de nova transaÃ§Ã£o
 export default class NovaTransacaoComponent {
   
     private form: HTMLFormElement;                
@@ -23,31 +23,31 @@ export default class NovaTransacaoComponent {
         const modalElement = document.getElementById('adicionarModal');
         this.adicionarModal = new bootstrap.Modal(modalElement);
         
-        //Obtém o botão de confirmação do modal
+        //ObtÃ©m o botÃ£o de confirmaÃ§Ã£o do modal
         this.confirmAddBtn = document.getElementById('confirmAdd') as HTMLButtonElement;
         this.configurarMascaras();
     
         this.configurarEventListeners();
     }
 
-    //Configura máscaras para formatação de valores monetários
+    //Configura mÃ¡scaras para formataÃ§Ã£o de valores monetÃ¡rios
     private configurarMascaras(): void {
           const valorInput = document.getElementById('valor') as HTMLInputElement;
 
-        //Isso configura uma função que será executada quando for clicado para o campo de input.
+        //Isso configura uma funÃ§Ã£o que serÃ¡ executada quando for clicado para o campo de input.
         valorInput.addEventListener('focus', () => {
-            //Remove formatação, deixando apenas números e vírgula
+            //Remove formataÃ§Ã£o, deixando apenas nÃºmeros e vÃ­rgula
             let value = valorInput.value.replace(/[^\d,]/g, '');
-            //Se for o valor padrão (0,00), limpa o campo e retorna vazia
+            //Se for o valor padrÃ£o (0,00), limpa o campo e retorna vazia
             valorInput.value = value === '0,00' ? '' : value;
         });
 
-        //Esse blur Filtra caracteres inválido
-        //formata o valor novamente (ex: adiciona separadores de milhar, símbolo de moeda)
+        //Esse blur Filtra caracteres invÃ¡lido
+        //formata o valor novamente (ex: adiciona separadores de milhar, sÃ­mbolo de moeda)
         valorInput.addEventListener('blur', () => {
-            let value = valorInput.value.replace(/[^\d,]/g, ''); //Remove formatação
+            let value = valorInput.value.replace(/[^\d,]/g, ''); //Remove formataÃ§Ã£o
 
-            //Se não houver valor, define como R$ 0,00
+            //Se nÃ£o houver valor, define como R$ 0,00
             if (!value) {
                 valorInput.value = 'R$ 0,00';
                 return;
@@ -63,7 +63,7 @@ export default class NovaTransacaoComponent {
                 if (parts[1].length > 2) value = parts[0] + ',' + parts[1].substring(0, 2); 
             }
 
-            //Aplica formatação monetária 
+            //Aplica formataÃ§Ã£o monetÃ¡ria 
             valorInput.value = 'R$ ' + value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
         });
 
@@ -75,22 +75,22 @@ export default class NovaTransacaoComponent {
             this.validarEConfirmar();
         });
 
-        //botão de confirmação no modal
+        //botÃ£o de confirmaÃ§Ã£o no modal
         this.confirmAddBtn.addEventListener('click', () => {
             this.adicionarTransacao(); 
             this.adicionarModal.hide(); 
         });
     }
-    //Valida os campos e prepara a confirmação
+    //Valida os campos e prepara a confirmaÃ§Ã£o
     private validarEConfirmar(): void {
         
         const tipo = (document.getElementById('tipoTransacao') as HTMLSelectElement).value as TipoTransacao;
         const mercadoria = (document.getElementById('mercadoria') as HTMLInputElement).value.trim();
         const quantidade = parseInt((document.getElementById('quantidade') as HTMLInputElement).value);
         const valorInput = (document.getElementById('valor') as HTMLInputElement).value;
-        const valor = formatarInputMoeda(valorInput); //Converte para número
+        const valor = formatarInputMoeda(valorInput); //Converte para nÃºmero
 
-        //Validações dos campos
+        //ValidaÃ§Ãµes dos campos
         if (!this.validarCampos(mercadoria, quantidade, valor)) return;
 
         if (tipo === TipoTransacao.COMPRA) {
@@ -98,34 +98,34 @@ export default class NovaTransacaoComponent {
             const valorTotalCompra = quantidade * valor;
           
             if (saldoAtual <= 0) {
-                alert('Saldo insuficiente para realizar compras. Seu saldo atual é zero ou negativo.');
+                alert('Saldo insuficiente para realizar compras. Seu saldo atual Ã© zero ou negativo.');
                 return;
             }
             
             if (valorTotalCompra > saldoAtual) {
-                alert(`Saldo insuficiente para esta compra. Saldo disponível: ${formatarMoeda(saldoAtual)}`);
+                alert(`Saldo insuficiente para esta compra. Saldo disponÃ­vel: ${formatarMoeda(saldoAtual)}`);
                 return;
             }
         }
 
-        //modal de confirmação com os dados
+        //modal de confirmaÃ§Ã£o com os dados
         document.getElementById('modalItemAdicionar')!.textContent = mercadoria;
         document.getElementById('modalQuantidadeAdicionar')!.textContent = quantidade.toString();
         document.getElementById('modalValorAdicionar')!.textContent = formatarMoeda(valor);
 
-        //Exibição do modal de confirmação
+        //ExibiÃ§Ã£o do modal de confirmaÃ§Ã£o
         this.adicionarModal.show();
     }
 
-    //Validações dos campos do formulário
+    //ValidaÃ§Ãµes dos campos do formulÃ¡rio
     private validarCampos(mercadoria: string, quantidade: number, valor: number): boolean {
     
         if (!mercadoria || mercadoria.length > 35) {
-            alert('Nome do produto deve ter até 35 caracteres');
+            alert('Nome do produto deve ter atÃ© 35 caracteres');
             return false;
         }
         if (isNaN(quantidade) || quantidade <= 0) {
-            alert('Quantidade deve ser um número positivo');
+            alert('Quantidade deve ser um nÃºmero positivo');
             return false;
         }
         if (isNaN(valor) || valor <= 0) {
@@ -136,22 +136,22 @@ export default class NovaTransacaoComponent {
         return true; 
     }
 
-    //Adiciona a transação à conta
+    //Adiciona a transaÃ§Ã£o Ã  conta
     private adicionarTransacao(): void {
-        //Obtém os valores dos campos novamente para garantir consistência
+        //ObtÃ©m os valores dos campos novamente para garantir consistÃªncia
         const tipo = (document.getElementById('tipoTransacao') as HTMLSelectElement).value as TipoTransacao;
         const mercadoria = (document.getElementById('mercadoria') as HTMLInputElement).value;
         const quantidade = parseInt((document.getElementById('quantidade') as HTMLInputElement).value);
         const valorInput = (document.getElementById('valor') as HTMLInputElement).value;
         const valor = formatarInputMoeda(valorInput);
 
-        //Validação final do valor
+        //ValidaÃ§Ã£o final do valor
         if (isNaN(valor) || valor <= 0) {
-            alert('Valor inválido!');
+            alert('Valor invÃ¡lido!');
             return;
         }
 
-        //Cria uma nova transação com os dados obtidos
+        //Cria uma nova transaÃ§Ã£o com os dados obtidos
         const transacao = new Transacao(
             tipo,
             mercadoria,
@@ -159,15 +159,15 @@ export default class NovaTransacaoComponent {
             valor
         );
 
-        //Adiciona a transação à conta
+        //Adiciona a transaÃ§Ã£o Ã  conta
         this.conta.adicionarTransacao(transacao);
         
-        //Dispara um evento de notificação para outros componentes
+        //Dispara um evento de notificaÃ§Ã£o para outros componentes
         document.dispatchEvent(new CustomEvent('transacao-adicionada'));
 
         this.form.reset();
         
-        //valor padrão para o campo de valor
+        //valor padrÃ£o para o campo de valor
         (document.getElementById('valor') as HTMLInputElement).value = 'R$ 0,00';
     }
 }
