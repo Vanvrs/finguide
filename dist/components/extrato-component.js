@@ -1,30 +1,30 @@
 import { formatarMoeda } from "../utils/formatters.js";
-// Classe principal do componente de extrato
+//Classe principal do componente de extrato
 export default class ExtratoComponent {
-    // Construtor - inicializa o componente
+    //inicializa o componente
     constructor(conta) {
-        this.transacaoParaExcluir = null; // ID da transa��o a ser exclu�da
-        this.conta = conta; // Recebe a conta como par�metro
-        // Obt�m refer�ncias aos elementos do DOM
+        this.transacaoParaExcluir = null;
+        this.conta = conta; //Recebe a conta como par�metro
+        //Obt�m refer�ncias aos elementos do DOM
         this.tabela = document.getElementById('listaTransacoes');
         this.totalGeral = document.getElementById('totalGeral');
         this.saldoHeader = document.getElementById('saldoHeader');
-        // Configura o modal de exclus�o usando Bootstrap
+        //Configura o modal de exclus�o usando Bootstrap
         const modalElement = document.getElementById('excluirModal');
         this.excluirModal = new bootstrap.Modal(modalElement);
         this.confirmDeleteBtn = document.getElementById('confirmDelete');
-        // Renderiza o componente inicialmente
+        //Renderiza o componente inicialmente
         this.render();
         // Configura os listeners de eventos
         this.setupEventListeners();
     }
-    // Agrupa transa��es por data para exibi��o organizada
+    //Agrupa transa��es por data para exibi��o organizada
     agruparTransacoes() {
         const transacoes = this.conta.getTransacoes();
         const grupos = [];
-        // Ordena transa��es por data (mais recente primeiro)
+        //Ordena transa��es por data
         const transacoesOrdenadas = [...transacoes].sort((a, b) => b.data.getTime() - a.data.getTime());
-        // Agrupa transa��es pela mesma data
+        //Agrupa transa��es pela mesma data
         for (const transacao of transacoesOrdenadas) {
             const dataTransacao = transacao.data.toDateString();
             const grupoExistente = grupos.find(grupo => grupo.label === dataTransacao);
@@ -40,25 +40,6 @@ export default class ExtratoComponent {
         }
         return grupos;
     }
-    /*  //Formata datas conforme o padr�o especificado
-     private formatarData(data: Date, formato: FormatoData = FormatoData.PADRAO): string {
-         if (formato === FormatoData.DIA_SEMANA_DIA_MES_ANO) {
-             return data.toLocaleDateString('pt-BR', {
-                 weekday: 'long',
-                 day: '2-digit',
-                 month: '2-digit',
-                 year: 'numeric'
-             });
-         } else if (formato === FormatoData.DIA_MES) {
-             return data.toLocaleDateString('pt-BR', {
-                 day: '2-digit',
-                 month: '2-digit'
-             });
-         }
- 
-         return data.toLocaleDateString('pt-BR');
-     }
-  */
     //Renderiza o componente na tela
     render() {
         //Limpa a tabela
@@ -97,15 +78,15 @@ export default class ExtratoComponent {
     atualizarTotais() {
         const totalGeral = this.conta.getTotalGeral();
         const saldo = this.conta.getSaldo();
-        // Formata e exibe os valores
+        //Formata e exibe os valores
         this.totalGeral.textContent = formatarMoeda(totalGeral);
         this.saldoHeader.textContent = formatarMoeda(saldo);
-        // Muda a cor conforme o saldo (positivo/negativo)
+        //Muda a cor conforme o saldo (positivo/negativo)
         const classeCor = saldo >= 0 ? 'texto-roxo' : 'text-danger';
         this.saldoHeader.className = classeCor;
     }
     setupEventListeners() {
-        //evento para remo��o)
+        //evento para remo��o
         this.tabela.addEventListener('click', (event) => {
             const btnRemover = event.target.closest('.btn-remover');
             if (btnRemover) {

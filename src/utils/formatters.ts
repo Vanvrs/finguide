@@ -10,7 +10,7 @@ export const formatarMoeda = (valor: number): string => {
 };
 //Converte uma string de valor monetário para número
 export const formatarInputMoeda = (valor: string): number => {
-    const valorLimpo = valor.replace(/[^\d,]/g, '').replace(',', '.');  //Substitui vírgula decimal por ponto
+    const valorLimpo = valor.replace(/[^\d,]/g, '').replace(',', '.'); //Substitui vírgula decimal por ponto
     const valorNumerico = parseFloat(valorLimpo);
     return isNaN(valorNumerico) ? 0 : valorNumerico;//Retorna 0 se a conversão resultar em NaN (Not a Number)
 };

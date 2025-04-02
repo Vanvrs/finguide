@@ -161,21 +161,21 @@ declare const bootstrap: any;
 //Classe principal para o componente de nova transação
 export default class NovaTransacaoComponent {
   
-    private form: HTMLFormElement;                // Formulário de transação
-    private conta: Conta;                        // Instância da conta
-    private adicionarModal: any;                 // Modal de confirmação
-    private confirmAddBtn: HTMLButtonElement;    // Botão de confirmação no modal
+    private form: HTMLFormElement;                
+    private conta: Conta;                      
+    private adicionarModal: any;                
+    private confirmAddBtn: HTMLButtonElement;  
 
     //inicializa o componente
     constructor(conta: Conta) {
-        // Armazena a conta recebida
+        //Armazena a conta recebida
         this.conta = conta;
         this.form = document.getElementById('formTransacao') as HTMLFormElement;
         //Configura o modal usando Bootstrap
         const modalElement = document.getElementById('adicionarModal');
         this.adicionarModal = new bootstrap.Modal(modalElement);
         
-        // Obtém o botão de confirmação do modal
+        //Obtém o botão de confirmação do modal
         this.confirmAddBtn = document.getElementById('confirmAdd') as HTMLButtonElement;
         this.configurarMascaras();
     
@@ -219,21 +219,6 @@ export default class NovaTransacaoComponent {
             valorInput.value = 'R$ ' + value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
         });
 
-    /*     //Evento durante a digitação
-        valorInput.addEventListener('input', (e) => {
-            //Mantém apenas números e vírgula
-            let value = valorInput.value.replace(/[^\d,]/g, '');
-            //Guarda a posição atual do cursor
-            const cursorPos = valorInput.selectionStart;
-
-            //Atualiza o valor
-            valorInput.value = value;
-
-            //Reposiciona o cursor 
-            if (cursorPos !== null) {
-                valorInput.setSelectionRange(cursorPos, cursorPos);
-            }
-        }); */
     }
 
     //Configura os eventos

@@ -4,52 +4,52 @@ import { formatarMoeda } from "../utils/formatters.js";
 import { GrupoTransacao } from "../types/GrupoTransacao.js";
 import { FormatoData } from "../types/FormatoData.js";
 
-// Declaração do Bootstrap (usado para modais)
+//Declaração do Bootstrap (usado para modais)
 declare const bootstrap: any;
 
-// Classe principal do componente de extrato
+//Classe principal do componente de extrato
 export default class ExtratoComponent {
-    // Elementos DOM
-    private tabela: HTMLTableSectionElement;          // Tabela que lista as transações
-    private totalGeral: HTMLElement;                 // Elemento que mostra o total geral
-    private saldoHeader: HTMLElement;                // Elemento que mostra o saldo
-    private conta: Conta;                            // Instância da conta com os dados
-    private excluirModal: any;                       // Modal para confirmação de exclusão
-    private confirmDeleteBtn: HTMLButtonElement;     // Botão de confirmação no modal
-    private transacaoParaExcluir: string | null = null; // ID da transação a ser excluída
+    s
+    private tabela: HTMLTableSectionElement;
+    private totalGeral: HTMLElement;
+    private saldoHeader: HTMLElement;
+    private conta: Conta;
+    private excluirModal: any;
+    private confirmDeleteBtn: HTMLButtonElement;
+    private transacaoParaExcluir: string | null = null;
 
-    // Construtor - inicializa o componente
+    //inicializa o componente
     constructor(conta: Conta) {
-        this.conta = conta; // Recebe a conta como parâmetro
-        
-        // Obtém referências aos elementos do DOM
+        this.conta = conta; //Recebe a conta como parâmetro
+
+        //Obtém referências aos elementos do DOM
         this.tabela = document.getElementById('listaTransacoes') as HTMLTableSectionElement;
         this.totalGeral = document.getElementById('totalGeral') as HTMLElement;
         this.saldoHeader = document.getElementById('saldoHeader') as HTMLElement;
-        
-        // Configura o modal de exclusão usando Bootstrap
+
+        //Configura o modal de exclusão usando Bootstrap
         const modalElement = document.getElementById('excluirModal');
         this.excluirModal = new bootstrap.Modal(modalElement);
         this.confirmDeleteBtn = document.getElementById('confirmDelete') as HTMLButtonElement;
 
-        // Renderiza o componente inicialmente
+        //Renderiza o componente inicialmente
         this.render();
         // Configura os listeners de eventos
         this.setupEventListeners();
     }
 
-    // Agrupa transações por data para exibição organizada
+    //Agrupa transações por data para exibição organizada
     private agruparTransacoes(): GrupoTransacao[] {
         const transacoes = this.conta.getTransacoes();
         const grupos: GrupoTransacao[] = [];
-        // Ordena transações por data (mais recente primeiro)
+        //Ordena transações por data
         const transacoesOrdenadas = [...transacoes].sort((a, b) => b.data.getTime() - a.data.getTime());
 
-        // Agrupa transações pela mesma data
+        //Agrupa transações pela mesma data
         for (const transacao of transacoesOrdenadas) {
             const dataTransacao = transacao.data.toDateString();
             const grupoExistente = grupos.find(grupo => grupo.label === dataTransacao);
-            
+
             if (grupoExistente) {
                 grupoExistente.transacoes.push(transacao);
             } else {
@@ -63,29 +63,10 @@ export default class ExtratoComponent {
         return grupos;
     }
 
-   /*  //Formata datas conforme o padrão especificado
-    private formatarData(data: Date, formato: FormatoData = FormatoData.PADRAO): string {
-        if (formato === FormatoData.DIA_SEMANA_DIA_MES_ANO) {
-            return data.toLocaleDateString('pt-BR', {
-                weekday: 'long',
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric'
-            });
-        } else if (formato === FormatoData.DIA_MES) {
-            return data.toLocaleDateString('pt-BR', {
-                day: '2-digit',
-                month: '2-digit'
-            });
-        }
-
-        return data.toLocaleDateString('pt-BR');
-    }
- */
     //Renderiza o componente na tela
     private render(): void {
         //Limpa a tabela
-        this.tabela.innerHTML = ''; 
+        this.tabela.innerHTML = '';
         const transacoes = this.conta.getTransacoes();
 
         //Se não houver transações, exibe mensagem
@@ -97,7 +78,7 @@ export default class ExtratoComponent {
                 //Define classe CSS baseada no tipo (COMPRA = negativo, outros = positivo)
                 const sinalClasse = transacao.tipo === 'COMPRA' ? 'text-danger' : 'text-success';
                 const row = document.createElement('tr');
-                
+
                 //Preenche a linha com os dados da transação
                 row.innerHTML = `
                     <td class="${sinalClasse}">${transacao.tipo === 'COMPRA' ? '-' : '+'}</td>
@@ -123,18 +104,18 @@ export default class ExtratoComponent {
     private atualizarTotais(): void {
         const totalGeral = this.conta.getTotalGeral();
         const saldo = this.conta.getSaldo();
-        
-        // Formata e exibe os valores
+
+        //Formata e exibe os valores
         this.totalGeral.textContent = formatarMoeda(totalGeral);
         this.saldoHeader.textContent = formatarMoeda(saldo);
-        
-        // Muda a cor conforme o saldo (positivo/negativo)
+
+        //Muda a cor conforme o saldo (positivo/negativo)
         const classeCor = saldo >= 0 ? 'texto-roxo' : 'text-danger';
         this.saldoHeader.className = classeCor;
     }
 
     private setupEventListeners(): void {
-        //evento para remoção)
+        //evento para remoção
         this.tabela.addEventListener('click', (event) => {
             const btnRemover = (event.target as HTMLElement).closest('.btn-remover');
             if (btnRemover) {
@@ -169,5 +150,6 @@ export default class ExtratoComponent {
         document.getElementById('modalItemExcluir')!.textContent = transacao.mercadoria;
         document.getElementById('modalQuantidadeExcluir')!.textContent = transacao.quantidade.toString();
         document.getElementById('modalValorExcluir')!.textContent = formatarMoeda(transacao.valor);
-        this.excluirModal.show(); 
-}}
+        this.excluirModal.show();
+    }
+}

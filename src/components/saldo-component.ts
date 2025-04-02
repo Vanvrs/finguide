@@ -18,7 +18,7 @@ export class SaldoComponent {
 
     //Configura os eventos de atualização
     private configurarEventListeners(): void {
-        //Evento de adicionar transação
+        //adicionar transação
         document.addEventListener('transacao-adicionada', () => this.atualizar());
         
         //Evento de remoção transação

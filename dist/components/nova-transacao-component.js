@@ -155,13 +155,13 @@ import { TipoTransacao } from "../types/TipoTransacao.js";
 export default class NovaTransacaoComponent {
     //inicializa o componente
     constructor(conta) {
-        // Armazena a conta recebida
+        //Armazena a conta recebida
         this.conta = conta;
         this.form = document.getElementById('formTransacao');
         //Configura o modal usando Bootstrap
         const modalElement = document.getElementById('adicionarModal');
         this.adicionarModal = new bootstrap.Modal(modalElement);
-        // Obt�m o bot�o de confirma��o do modal
+        //Obt�m o bot�o de confirma��o do modal
         this.confirmAddBtn = document.getElementById('confirmAdd');
         this.configurarMascaras();
         this.configurarEventListeners();
@@ -200,21 +200,6 @@ export default class NovaTransacaoComponent {
             //Aplica formata��o monet�ria 
             valorInput.value = 'R$ ' + value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
         });
-        /*     //Evento durante a digita��o
-            valorInput.addEventListener('input', (e) => {
-                //Mant�m apenas n�meros e v�rgula
-                let value = valorInput.value.replace(/[^\d,]/g, '');
-                //Guarda a posi��o atual do cursor
-                const cursorPos = valorInput.selectionStart;
-    
-                //Atualiza o valor
-                valorInput.value = value;
-    
-                //Reposiciona o cursor
-                if (cursorPos !== null) {
-                    valorInput.setSelectionRange(cursorPos, cursorPos);
-                }
-            }); */
     }
     //Configura os eventos
     configurarEventListeners() {

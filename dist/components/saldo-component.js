@@ -12,7 +12,7 @@ export class SaldoComponent {
     }
     //Configura os eventos de atualiza��o
     configurarEventListeners() {
-        //Evento de adicionar transa��o
+        //adicionar transa��o
         document.addEventListener('transacao-adicionada', () => this.atualizar());
         //Evento de remo��o transa��o
         document.addEventListener('transacao-removida', () => this.atualizar());
