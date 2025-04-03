@@ -43,17 +43,17 @@ export default class ExtratoComponent {
         //Limpa a tabela
         this.tabela.innerHTML = '';
         const transacoes = this.conta.getTransacoes();
-        //Se n�o houver transa��es, exibe mensagem
+        //Se não houver transações, exibe mensagem
         if (transacoes.length === 0) {
             this.tabela.innerHTML = `<tr><td colspan="6">Nenhuma transa��o cadastrada</td></tr>`;
         }
         else {
-            //Para cada transa��o, cria uma linha na tabela
+            //Para cada transão, cria uma linha na tabela
             transacoes.forEach(transacao => {
                 //Define classe baseada no tipo (COMPRA = negativo, outros = positivo)
                 const sinalClasse = transacao.tipo === 'COMPRA' ? 'text-danger' : 'text-success';
                 const row = document.createElement('tr');
-                //Preenche a linha com os dados da transa��o
+                //Preenche a linha com os dados da transação
                 row.innerHTML = `
                     <td class="${sinalClasse}">${transacao.tipo === 'COMPRA' ? '-' : '+'}</td>
                     <td class="limitado" title="${transacao.mercadoria}">${transacao.mercadoria}</td>
@@ -84,17 +84,17 @@ export default class ExtratoComponent {
         this.saldoHeader.className = classeCor;
     }
     setupEventListeners() {
-        //evento para remo��o
+        //evento para remoção
         this.tabela.addEventListener('click', (event) => {
             const btnRemover = event.target.closest('.btn-remover');
             if (btnRemover) {
                 this.prepararExclusao(btnRemover.getAttribute('data-id'));
             }
         });
-        //Bot�o de confirma��o no modal de exclus�o
+        //Botão de confirmação no modal de exclusão
         this.confirmDeleteBtn.addEventListener('click', () => {
             if (this.transacaoParaExcluir) {
-                //Remove a transa��o e atualiza a exibi��o
+                //Remove a transaçãoo e atualiza a exibiçãoo
                 this.conta.removerTransacao(this.transacaoParaExcluir);
                 this.render();
                 this.excluirModal.hide();
@@ -102,11 +102,11 @@ export default class ExtratoComponent {
                 document.dispatchEvent(new CustomEvent('transacao-removida'));
             }
         });
-        //eventos globais de atualiza��o
+        //eventos globais de atualização
         document.addEventListener('transacao-adicionada', () => this.render());
         document.addEventListener('transacao-removida', () => this.render());
     }
-    //prepara��o a exclus�o mostrando os dados no modal
+    //preparação a exclusão mostrando os dados no modal
     prepararExclusao(id) {
         const transacao = this.conta.getTransacoes().find(t => t.id === id);
         if (!transacao)

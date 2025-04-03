@@ -3,7 +3,7 @@ import { formatarMoeda } from "../utils/formatters.js";
 import { GrupoTransacao } from "../types/GrupoTransacao.js";
 import { FormatoData } from "../types/FormatoData.js";
 
-//Declaração do Bootstrap (usado para modais)
+//Declaraï¿½ï¿½o do Bootstrap (usado para modais)
 declare const bootstrap: any;
 
 //Classe principal do componente de extrato
@@ -19,13 +19,13 @@ export default class ExtratoComponent {
 
     //inicializa o componente
     constructor(conta: Conta) {
-        this.conta = conta; //Recebe a conta como parâmetro
+        this.conta = conta; //Recebe a conta como parï¿½metro
 
         this.tabela = document.getElementById('listaTransacoes') as HTMLTableSectionElement;
         this.totalGeral = document.getElementById('totalGeral') as HTMLElement;
         this.saldoHeader = document.getElementById('saldoHeader') as HTMLElement;
 
-        //Configura o modal de exclusão usando Bootstrap
+        //Configura o modal de exclusï¿½o usando Bootstrap
         const modalElement = document.getElementById('excluirModal');
         this.excluirModal = new bootstrap.Modal(modalElement);
         this.confirmDeleteBtn = document.getElementById('confirmDelete') as HTMLButtonElement;
@@ -35,14 +35,14 @@ export default class ExtratoComponent {
         this.setupEventListeners();
     }
 
-    //Agrupa transações por data para exibição organizada
+    //Agrupa transaï¿½ï¿½es por data para exibiï¿½ï¿½o organizada
     private agruparTransacoes(): GrupoTransacao[] {
         const transacoes = this.conta.getTransacoes();
         const grupos: GrupoTransacao[] = [];
-        //Ordena transações por data
+        //Ordena transaï¿½ï¿½es por data
         const transacoesOrdenadas = [...transacoes].sort((a, b) => b.data.getTime() - a.data.getTime());
 
-        //Agrupa transações pela mesma data
+        //Agrupa transaï¿½ï¿½es pela mesma data
         for (const transacao of transacoesOrdenadas) {
             const dataTransacao = transacao.data.toDateString();
             const grupoExistente = grupos.find(grupo => grupo.label === dataTransacao);
@@ -65,17 +65,17 @@ export default class ExtratoComponent {
         this.tabela.innerHTML = '';
         const transacoes = this.conta.getTransacoes();
 
-        //Se não houver transações, exibe mensagem
+        //Se nÃ£o houver transaÃ§Ãµes, exibe mensagem
         if (transacoes.length === 0) {
-            this.tabela.innerHTML = `<tr><td colspan="6">Nenhuma transação cadastrada</td></tr>`;
+            this.tabela.innerHTML = `<tr><td colspan="6">Nenhuma transaï¿½ï¿½o cadastrada</td></tr>`;
         } else {
-            //Para cada transação, cria uma linha na tabela
+            //Para cada transÃ£o, cria uma linha na tabela
             transacoes.forEach(transacao => {
                 //Define classe baseada no tipo (COMPRA = negativo, outros = positivo)
                 const sinalClasse = transacao.tipo === 'COMPRA' ? 'text-danger' : 'text-success';
                 const row = document.createElement('tr');
 
-                //Preenche a linha com os dados da transação
+                //Preenche a linha com os dados da transaÃ§Ã£o
                 row.innerHTML = `
                     <td class="${sinalClasse}">${transacao.tipo === 'COMPRA' ? '-' : '+'}</td>
                     <td class="limitado" title="${transacao.mercadoria}">${transacao.mercadoria}</td>
@@ -111,7 +111,7 @@ export default class ExtratoComponent {
     }
 
     private setupEventListeners(): void {
-        //evento para remoção
+        //evento para remoÃ§Ã£o
         this.tabela.addEventListener('click', (event) => {
             const btnRemover = (event.target as HTMLElement).closest('.btn-remover');
             if (btnRemover) {
@@ -119,10 +119,10 @@ export default class ExtratoComponent {
             }
         });
 
-        //Botão de confirmação no modal de exclusão
+        //BotÃ£o de confirmaÃ§Ã£o no modal de exclusÃ£o
         this.confirmDeleteBtn.addEventListener('click', () => {
             if (this.transacaoParaExcluir) {
-                //Remove a transação e atualiza a exibição
+                //Remove a transaÃ§Ã£oo e atualiza a exibiÃ§Ã£oo
                 this.conta.removerTransacao(this.transacaoParaExcluir);
                 this.render();
                 this.excluirModal.hide();
@@ -131,12 +131,12 @@ export default class ExtratoComponent {
             }
         });
 
-        //eventos globais de atualização
+        //eventos globais de atualizaÃ§Ã£o
         document.addEventListener('transacao-adicionada', () => this.render());
         document.addEventListener('transacao-removida', () => this.render());
     }
 
-    //preparação a exclusão mostrando os dados no modal
+    //preparaÃ§Ã£o a exclusÃ£o mostrando os dados no modal
     private prepararExclusao(id: string): void {
         const transacao = this.conta.getTransacoes().find(t => t.id === id);
         if (!transacao) return;
