@@ -1,7 +1,6 @@
 import { Conta } from "../types/Conta.js";
 import { formatarMoeda } from "../utils/formatters.js";
 import { GrupoTransacao } from "../types/GrupoTransacao.js";
-import { FormatoData } from "../types/FormatoData.js";
 
 //Declara��o do Bootstrap (usado para modais)
 declare const bootstrap: any;

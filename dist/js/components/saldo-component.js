@@ -10,19 +10,19 @@ export class SaldoComponent {
         this.atualizar();
         this.configurarEventListeners();
     }
-    //Configura os eventos de atualiza��o
+    //Configura os eventos de atualização
     configurarEventListeners() {
-        //adicionar transa��o
+        //adicionar transação
         document.addEventListener('transacao-adicionada', () => this.atualizar());
-        //Evento de remo��o transa��o
+        //Evento de remoção transação
         document.addEventListener('transacao-removida', () => this.atualizar());
     }
-    //Atualiza a exibi��o do saldo
+    //Atualiza a exibição do saldo
     atualizar() {
         const saldo = this.conta.getSaldo();
-        //Formata o valor para exibi��o monet�ria
+        //Formata o valor para exibição monetária
         const saldoFormatado = formatarMoeda(saldo);
-        //Atualiza o conte�do dos elementos com o saldo formatado
+        //Atualiza o conteúdo dos elementos com o saldo formatado
         this.elementoSaldoTotal.textContent = saldoFormatado;
         this.elementoSaldoHeader.textContent = saldoFormatado;
         const classeCor = saldo >= 0 ? 'texto-roxo' : 'text-danger';

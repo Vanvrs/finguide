@@ -5,14 +5,14 @@ export class Transacao {
         this.quantidade = quantidade;
         this.valor = valor;
         this.data = data;
-        //Gera um ID aleat�rio quando a transa��o � criada
+        //Gera um ID aleatório quando a transação é criada
         this.id = Math.random().toString(36).substring(2, 9);
     }
-    //valor total da transa��o (quantidade � valor unit�rio)
+    //valor total da transação (quantidade é valor unitário)
     get total() {
         return this.quantidade * this.valor;
     }
-    //M�todo para serializa��o do objeto em JSON
+    //Método para serialização do objeto em JSON
     toJSON() {
         return {
             id: this.id,

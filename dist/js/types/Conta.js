@@ -22,10 +22,10 @@ export class Conta {
         }, 0);
     }
     adicionarTransacao(transacao) {
-        //Adiciona a transa��o ao array
+        //Adiciona a transação ao array
         this.transacoes.push(transacao);
         Armazenador.salvar("transacoes", this.transacoes);
-        //atualiza��o do saldo
+        //atualização do saldo
         document.dispatchEvent(new CustomEvent('saldo-atualizado'));
     }
     removerTransacao(id) {
