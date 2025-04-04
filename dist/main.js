@@ -1,9 +1,9 @@
 var _a, _b;
-import { Conta } from "./types/Conta.js";
-import NovaTransacaoComponent from "./components/nova-transacao-component.js";
-import ExtratoComponent from "./components/extrato-component.js";
-import { formatarMoeda } from "./utils/formatters.js";
-import { TipoTransacao } from "./types/TipoTransacao.js";
+import { Conta } from "./js/types/Conta.js";
+import NovaTransacaoComponent from "./js/components/nova-transacao-component.js";
+import ExtratoComponent from "./js/components/extrato-component.js";
+import { formatarMoeda } from "./js/utils/formatters.js";
+import { TipoTransacao } from "./js/types/TipoTransacao.js";
 //inst�ncia da conta
 const conta = new Conta();
 //Fun��o para atualizar o extrato na vers�o mobile
