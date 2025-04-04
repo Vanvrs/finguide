@@ -45,7 +45,7 @@ export default class ExtratoComponent {
         const transacoes = this.conta.getTransacoes();
         //Se não houver transações, exibe mensagem
         if (transacoes.length === 0) {
-            this.tabela.innerHTML = `<tr><td colspan="6">Nenhuma transa��o cadastrada</td></tr>`;
+            this.tabela.innerHTML = `<tr><td colspan="6">Nenhuma transação cadastrada</td></tr>`;
         }
         else {
             //Para cada transão, cria uma linha na tabela

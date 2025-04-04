@@ -2,7 +2,7 @@ import { Conta } from "../types/Conta.js";
 import { formatarMoeda } from "../utils/formatters.js";
 import { GrupoTransacao } from "../types/GrupoTransacao.js";
 
-//Declara��o do Bootstrap (usado para modais)
+//Declarao do Bootstrap (usado para modais)
 declare const bootstrap: any;
 
 //Classe principal do componente de extrato
@@ -66,7 +66,7 @@ export default class ExtratoComponent {
 
         //Se não houver transações, exibe mensagem
         if (transacoes.length === 0) {
-            this.tabela.innerHTML = `<tr><td colspan="6">Nenhuma transa��o cadastrada</td></tr>`;
+            this.tabela.innerHTML = `<tr><td colspan="6">Nenhuma transação cadastrada</td></tr>`;
         } else {
             //Para cada transão, cria uma linha na tabela
             transacoes.forEach(transacao => {
